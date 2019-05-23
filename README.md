@@ -1,8 +1,12 @@
 # Q-A
 
-### ***提issues请进入https://github.com/Missgentlenessless/Q-A/issues***
+------------------------
 
-### 仓库结构说明
+> ### **提issues请进入  https://github.com/Missgentlenessless/Q-A/issues**
+
+------------------------
+
+#### 仓库结构说明
 
 * Guide/
 > 各种工具使用手册
