@@ -1,6 +1,6 @@
 # Q-A
 
-## *** 提issues请进入https://github.com/Missgentlenessless/Q-A/issues ***
+### ***提issues请进入https://github.com/Missgentlenessless/Q-A/issues***
 
 ### 仓库结构说明
 
