@@ -2,7 +2,7 @@
 
 ------------------------
 
-> ### **提issues请进入  https://github.com/Missgentlenessless/Q-A/issues**
+> ### **提issues请进入  https://github.com/missgentle/Q-A/issues**
 
 ------------------------
 
