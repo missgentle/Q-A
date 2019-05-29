@@ -20,7 +20,7 @@ JBOSS_HOME：D:\SoftWare\wildfly-15.0.0.Final Path：;%JBOSS_HOME%\bin
 
 浏览器打开http://127.0.0.1:9990/，使用刚创建的用户登录进入wildfly控制台
 
-<img src='https://github.com/missgentle/Q-A/edit/master/Guide/wildfly/1.png'>
+<img src='https://github.com/missgentle/Q-A/blob/master/Guide/wildfly/1.png'>
 
 5 修改management默认端口
 
@@ -56,6 +56,8 @@ JBOSS_HOME：D:\SoftWare\wildfly-15.0.0.Final Path：;%JBOSS_HOME%\bin
 打开http://127.0.0.1:9990/console/index.html 选Deployments选项卡，    
 左侧栏点+号下拉菜单-Upload Deployment 将war包拖拽上去-可修改包名和运行时的名字-打开自启动-finish 
 
+<img src='https://github.com/missgentle/Q-A/blob/master/Guide/wildfly/2.png'>
+
 - 手动部署
 
 因为默认为自动部署模式，所以将war包放到 D:\SoftWare\wildfly-15.0.0.Final\standalone\deployments\下 如D:\SoftWare\wildfly-15.0.0.Final\standalone\deployments\ux_backend-0.0.1.war     
@@ -70,5 +72,8 @@ url带war包名太梗了，在项目里\WEB-INF\下添加jboss-web.xml文件，�
 
 ```
 
-重新生成war包重复以上操作，再访问http://127.0.0.1:8080/ux即可(试了没改成功,猜想可能因为生成的jboss-web.xml没在war包\WEB-INF\路径下)     
+重新生成war包重复以上操作，再访问http://127.0.0.1:8080/ux即可(试了没改成功,猜想可能因为生成的jboss-web.xml没在war包\WEB-INF\路径下) 
+
+<img src='https://github.com/missgentle/Q-A/blob/master/Guide/wildfly/3.png'>
+
 此时访问http://127.0.0.1:9990/console/index.html#deployments 也可以看到部署的war包
