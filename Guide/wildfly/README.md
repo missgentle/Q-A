@@ -47,7 +47,7 @@ JBOSS_HOME：D:\SoftWare\wildfly-15.0.0.Final Path：;%JBOSS_HOME%\bin
 6 禁用根目录自动导航到http://127.0.0.1:9990/console/index.html
 
 在standalone.xml中注掉
-`<location name="/" handler="welcome-content"/>`
+`<location name="/" handler="welcome-content"/>`和
 `<file name="welcome-content" path="${jboss.home.dir}/welcome-content"/>`
 也可重写使其导航到你想要的url
 
