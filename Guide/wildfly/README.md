@@ -86,7 +86,7 @@ _(如ux_backend/build/libs/exploded/ux_backend-0.0.1.war/WEB-INF 其中build是�
 
 图3的jboss-web.xml文件不起作用就是文件存放的路径不对，正确打出来的war包中的jboss-web.xml文件应该在这个位置
 
-https://github.com/missgentle/Q-A/blob/master/Guide/wildfly/4.png
+<img src='https://github.com/missgentle/Q-A/blob/master/Guide/wildfly/4.png'>
 
 
 此时访问http://127.0.0.1:9990/console/index.html#deployments 也可以看到部署的war包
