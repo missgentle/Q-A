@@ -71,7 +71,7 @@ JBOSS_HOME：D:\SoftWare\wildfly-15.0.0.Final Path：;%JBOSS_HOME%\bin
 因为默认为自动部署模式，所以将war包放到 D:\SoftWare\wildfly-15.0.0.Final\standalone\deployments\下 如D:\SoftWare\wildfly-15.0.0.Final\standalone\deployments\ux_backend-0.0.1.war     
 启动standalone.bat即自动部署，完成后会生成一个ux_backend-0.0.1.war.deployed文件。    
 访问http://127.0.0.1:8080/ux_backend-0.0.1 (注意端口号是8080，因为在standalone.xml中最后有配置，修改方法参考5 )    
-url带war包名太梗了，可在**项目的输出路径的\WEB-INF\下**添加jboss-web.xml文件，
+url带war包名太梗(耿直)了，可在**项目的输出路径的\WEB-INF\下**添加jboss-web.xml文件，
 
 _(如ux_backend/build/libs/exploded/ux_backend-0.0.1.war/WEB-INF 其中build是编译输出，也就是说如果你为了清理项目把build整个删除了的话，那么你需要打包两次，第一次生成build输出，\WEB-INF\下添加jboss-web.xml文件需要第二次打包)_
 
