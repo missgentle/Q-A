@@ -60,6 +60,7 @@ JBOSS_HOME：D:\SoftWare\wildfly-15.0.0.Final Path：;%JBOSS_HOME%\bin
 左侧栏点+号下拉菜单-Upload Deployment 将war包拖拽上去-可修改包名和运行时的名字-打开自启动-finish 
 
 <img src='https://github.com/missgentle/Q-A/blob/master/Guide/wildfly/2.png'>
+可以看到这里Context Root的值是war包名ux_backend-0.0.1
 
 点view可查看war包结构
 
@@ -89,4 +90,4 @@ _(如ux_backend/build/libs/exploded/ux_backend-0.0.1.war/WEB-INF 其中build是�
 <img src='https://github.com/missgentle/Q-A/blob/master/Guide/wildfly/4.png'>
 
 
-此时访问http://127.0.0.1:9990/console/index.html#deployments 也可以看到部署的war包
+此时访问http://127.0.0.1:9990/console/index.html#deployments 也可以看到部署的war包Context Root的值变成了/ux
