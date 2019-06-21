@@ -49,7 +49,7 @@ JBOSS_HOME：D:\SoftWare\wildfly-15.0.0.Final Path：;%JBOSS_HOME%\bin
 在standalone.xml中注掉
 `<location name="/" handler="welcome-content"/>`和
 `<file name="welcome-content" path="${jboss.home.dir}/welcome-content"/>`
-也可重写使其导航到你想要的url
+也可重写使其导航到你想要的url(好像试了都没起作用)
 
 7 部署war包
 
@@ -65,7 +65,9 @@ JBOSS_HOME：D:\SoftWare\wildfly-15.0.0.Final Path：;%JBOSS_HOME%\bin
 因为默认为自动部署模式，所以将war包放到 D:\SoftWare\wildfly-15.0.0.Final\standalone\deployments\下 如D:\SoftWare\wildfly-15.0.0.Final\standalone\deployments\ux_backend-0.0.1.war     
 启动standalone.bat即自动部署，完成后会生成jaxws-helloworld.jar.deployed文件。    
 访问http://127.0.0.1:8080/ux_backend-0.0.1 (注意端口号是8080，因为在standalone.xml中最后有配置，修改方法参考5 )    
-url带war包名太梗了，在项目里\WEB-INF\下添加jboss-web.xml文件，内容如下
+url带war包名太梗了，在**项目的输出路径的\WEB-INF\下**
+(如ux_backend/build/libs/exploded/ux_backend-0.0.1.war/WEB-INF)
+添加jboss-web.xml文件，文件内容如下
 
 ```
 <jboss-web>
@@ -74,7 +76,7 @@ url带war包名太梗了，在项目里\WEB-INF\下添加jboss-web.xml文件，�
 
 ```
 
-重新生成war包重复以上操作，再访问http://127.0.0.1:8080/ux即可(试了没改成功,猜想可能因为生成的jboss-web.xml没在war包\WEB-INF\路径下) 
+重新生成war包重复以上操作，再访问http://127.0.0.1:8080/ux即可 
 
 <img src='https://github.com/missgentle/Q-A/blob/master/Guide/wildfly/3.png'>
 
