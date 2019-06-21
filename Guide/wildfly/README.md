@@ -18,7 +18,8 @@ JBOSS_HOME：D:\SoftWare\wildfly-15.0.0.Final Path：;%JBOSS_HOME%\bin
 
 4 启动wildfly：运行D:\SoftWare\wildfly-15.0.0.Final\bin\standalone.bat (窗口不要关)
 
-浏览器打开http://127.0.0.1:9990/，使用刚创建的用户登录进入wildfly控制台
+浏览器打开http://127.0.0.1:9990/
+使用刚创建的用户登录进入wildfly控制台
 
 <img src='https://github.com/missgentle/Q-A/blob/master/Guide/wildfly/1.png'>
 
@@ -60,14 +61,20 @@ JBOSS_HOME：D:\SoftWare\wildfly-15.0.0.Final Path：;%JBOSS_HOME%\bin
 
 <img src='https://github.com/missgentle/Q-A/blob/master/Guide/wildfly/2.png'>
 
+点view可查看war包结构
+
+<img src='https://github.com/missgentle/Q-A/blob/master/Guide/wildfly/3.png'>
+
 - 手动部署
 
 因为默认为自动部署模式，所以将war包放到 D:\SoftWare\wildfly-15.0.0.Final\standalone\deployments\下 如D:\SoftWare\wildfly-15.0.0.Final\standalone\deployments\ux_backend-0.0.1.war     
-启动standalone.bat即自动部署，完成后会生成jaxws-helloworld.jar.deployed文件。    
+启动standalone.bat即自动部署，完成后会生成一个ux_backend-0.0.1.war.deployed文件。    
 访问http://127.0.0.1:8080/ux_backend-0.0.1 (注意端口号是8080，因为在standalone.xml中最后有配置，修改方法参考5 )    
-url带war包名太梗了，在**项目的输出路径的\WEB-INF\下**
-(如ux_backend/build/libs/exploded/ux_backend-0.0.1.war/WEB-INF)
-添加jboss-web.xml文件，文件内容如下
+url带war包名太梗了，可在**项目的输出路径的\WEB-INF\下**添加jboss-web.xml文件，
+
+_(如ux_backend/build/libs/exploded/ux_backend-0.0.1.war/WEB-INF 其中build是编译输出，也就是说如果你为了清理项目把build整个删除了的话，那么你需要打包两次，第一次生成build输出，\WEB-INF\下添加jboss-web.xml文件需要第二次打包)_
+
+文件内容如下
 
 ```
 <jboss-web>
@@ -75,9 +82,11 @@ url带war包名太梗了，在**项目的输出路径的\WEB-INF\下**
 </jboss-web>
 
 ```
-
 重新生成war包重复以上操作，再访问http://127.0.0.1:8080/ux即可 
 
-<img src='https://github.com/missgentle/Q-A/blob/master/Guide/wildfly/3.png'>
+图3的jboss-web.xml文件不起作用就是文件存放的路径不对，正确打出来的war包中的jboss-web.xml文件应该在这个位置
+
+https://github.com/missgentle/Q-A/blob/master/Guide/wildfly/4.png
+
 
 此时访问http://127.0.0.1:9990/console/index.html#deployments 也可以看到部署的war包
