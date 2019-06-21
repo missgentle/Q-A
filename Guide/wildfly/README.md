@@ -4,26 +4,26 @@
 
 https://blog.csdn.net/big_bigwolf/article/details/53311780 https://blog.csdn.net/kylinsoong/article/details/12307355 https://www.cnblogs.com/101key/p/5131546.html
 
-1 下载wildfly(解压即可用，这里我下载的版本为15.0.0)
+#### 1 下载wildfly(解压即可用，这里我下载的版本为15.0.0)
 
 https://wildfly.org/downloads/
 
-2 配置环境变量(我的wildfly解压路径：D:\SoftWare\wildfly-15.0.0.Final)
+#### 2 配置环境变量(我的wildfly解压路径：D:\SoftWare\wildfly-15.0.0.Final)
 
 JBOSS_HOME：D:\SoftWare\wildfly-15.0.0.Final Path：;%JBOSS_HOME%\bin
 
-3 创建用户：
+#### 3 创建用户：
 
 运行D:\SoftWare\wildfly-15.0.0.Final\bin\add-user.bat (若admin用户已存在可以修改密码，或者换一个名字。另外注意输入密码时，终端并不显示输入内容，并不是输不进去)
 
-4 启动wildfly：运行D:\SoftWare\wildfly-15.0.0.Final\bin\standalone.bat (窗口不要关)
+#### 4 启动wildfly：运行D:\SoftWare\wildfly-15.0.0.Final\bin\standalone.bat (窗口不要关)
 
 浏览器打开http://127.0.0.1:9990/
 使用刚创建的用户登录进入wildfly控制台
 
 <img src='https://github.com/missgentle/Q-A/blob/master/Guide/wildfly/1.png'>
 
-5 修改management默认端口
+#### 5 修改management默认端口
 
 打开D:\SoftWare\wildfly-15.0.0.Final\standalone\configuration\standalone.xml 拉到文件最后，可以看到http端口默认设为9990： 修改9990为新端口，如8880，重启standalone.bat，访问http://127.0.0.1:8880/
 
@@ -45,14 +45,14 @@ JBOSS_HOME：D:\SoftWare\wildfly-15.0.0.Final Path：;%JBOSS_HOME%\bin
     
 ```
 
-6 禁用根目录自动导航到http://127.0.0.1:9990/console/index.html
+#### 6 禁用根目录自动导航到http://127.0.0.1:9990/console/index.html  (好像试了都没起作用)
 
 在standalone.xml中注掉
 `<location name="/" handler="welcome-content"/>`和
 `<file name="welcome-content" path="${jboss.home.dir}/welcome-content"/>`
-也可重写使其导航到你想要的url(好像试了都没起作用)
+也可重写使其导航到你想要的url
 
-7 部署war包
+#### 7 部署war包
 
 - Administration UI Console部署
 
