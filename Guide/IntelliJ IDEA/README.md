@@ -44,5 +44,12 @@ File -->Settings -->Build, Execution, Deployment --> Compiler --> Kotlin Compile
  <img src='https://github.com/missgentle/Q-A/blob/master/Guide/IntelliJ%20IDEA/idea-3.png'>
   
 File->Settings->Plugins->Kotlin点击Update。如果没有显示update，先reload 一下就会出现，reload都没有那就点下面第一个install按钮。升级之后需要重启。
+
  <img src='https://github.com/missgentle/Q-A/blob/master/Guide/IntelliJ%20IDEA/idea-4.png'>
  
+若无法自动识别出主程序(下图中1处为空)，就按下图步骤自行添加上(仅以spring boot为例)
+ 
+ <img src='https://github.com/missgentle/Q-A/blob/master/Guide/IntelliJ%20IDEA/idea-5.png'>
+ 
+若有Can't use Subversion command line client: svn报错，参照issue10：
+https://github.com/missgentle/Q-A/issues/10
