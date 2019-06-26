@@ -43,6 +43,6 @@ Path	追加 ;%JAVA_HOME%\bin;%JAVA_HOME%\jre\bin
 File -->Settings -->Build, Execution, Deployment --> Compiler --> Kotlin Compiler -->Target JVM version 改为 1.8
  <img src='https://github.com/missgentle/Q-A/blob/master/Guide/IntelliJ%20IDEA/idea-3.png'>
   
-File->Settings->Plugins->Kotlin点击Update。如果没有显示update，先reload 一下就会出现。升级之后需要重启。
+File->Settings->Plugins->Kotlin点击Update。如果没有显示update，先reload 一下就会出现，reload都没有那就点下面第一个install按钮。升级之后需要重启。
  <img src='https://github.com/missgentle/Q-A/blob/master/Guide/IntelliJ%20IDEA/idea-4.png'>
  
