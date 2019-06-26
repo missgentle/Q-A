@@ -84,7 +84,7 @@ optimize-css-assets-webpack-plugin 不同组件中重复的css可以快速去重
 
 所以现在让我们一口气安装一大波loader和插件：
 
-yarn babel-loader css-loader html-loader html-webpack-plugin mini-css-extract-plugin ts-loader url-loader --dev
+`yarn babel-loader css-loader html-loader html-webpack-plugin mini-css-extract-plugin ts-loader url-loader --dev`
 
 _以上提及的所有依赖包我的经验是：不管用不用，反正先都装上也没坏处，因为就算装了，甚至是import了，只要没有真正使用，webpack是不会打包进去的。_
 
