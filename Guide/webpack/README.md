@@ -59,14 +59,14 @@ _我的npm最近越来越不好用，所以后面我使用yarn为例，使用npm
 
 #### 5 如果想要使用ts作为开发语言，接下来请进行以下相关操作：
 
-    - 安装 @types/node typescript ts-node @types/webpack ts-loader 
-    - 创建 tsconfig.json 文件(内容参考参考这个链接：https://github.com/missgentle/Q-A/tree/master/Guide/express)
+ - 安装 @types/node typescript ts-node @types/webpack ts-loader 
+ - 创建 tsconfig.json 文件(内容参考参考这个链接：https://github.com/missgentle/Q-A/tree/master/Guide/express)
     
 #### 6 如果还想要使用jQ
 
-    - 安装 @types/jquery ：运行命令 `yarn add @types/jquery --dev`
-    - 安装 jquery ：运行命令 `yarn add jquery `
-    ** 注意安装时带或不带 --dev 是有区别的，安装完看看package.json文件变化就知道了 **
+ - 安装 @types/jquery ：运行命令 `yarn add @types/jquery --dev`
+ - 安装 jquery ：运行命令 `yarn add jquery `
+ ** 注意安装时带或不带 --dev 是有区别的，安装完看看package.json文件变化就知道了 **
 
 #### 7 loader(模块转换器)和plugin是webpack中两个非常重要的概念：
 loader用于对模块的源代码进行转换，因为webpack本身只能识别js文件，所以需要各种各样的loader来帮助webpack处理加载不同资源文件，本质是一个函数。
