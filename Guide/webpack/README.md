@@ -251,9 +251,12 @@ devServer: {
   "dependencies": {
     ...
   }
+}
   ```
   
   这样之后就可以在cmd中键入 `yarn start` 启动，而不需要 `webpack-dev-server --config webpack.config.js`了
+  
+  浏览器打开 http://localhost:8082  就可以看到你的页面啦~
 
 
 
