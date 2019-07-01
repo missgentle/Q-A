@@ -36,6 +36,9 @@ https://juejin.im/post/5b456ee4e51d455d94713404
     ]
 }
 ```
+此处module 字段是commonjs，否则 webpack 将因为错误而构建失败。发生这种情况，是因为 ts-node 不支持 commonjs 以外的任何模块语法。
+这个问题有两种解决方案：修改 tsconfig.json或安装 tsconfig-paths，详见https://www.webpackjs.com/configuration/configuration-languages/。
+
 
 - 这时就可以创建你的server/server.ts文件了：
 
