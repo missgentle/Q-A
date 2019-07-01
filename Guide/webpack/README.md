@@ -128,8 +128,8 @@ module.exports = {
     }
   },
   devServer: {
-  	contentBase: './dist',
-  	disableHostCheck: true,
+    contentBase: './dist',
+    disableHostCheck: true,
     host: '0.0.0.0',
     port: '8082'
   },
