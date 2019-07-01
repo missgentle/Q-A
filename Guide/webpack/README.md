@@ -226,8 +226,8 @@ module.exports = {
 
 ```
 devServer: {
-  	contentBase: './dist',
-  	disableHostCheck: true,
+    contentBase: './dist',
+    disableHostCheck: true,
     host: '0.0.0.0',
     port: '8082'
   },
@@ -242,7 +242,7 @@ devServer: {
   "version": "1.0.0",
   "main": "index.ts",
   "scripts": {
-   **"start": "webpack-dev-server --config webpack.config.js"**
+   "start": "webpack-dev-server --config webpack.config.js"
   },
   "license": "MIT",
   "devDependencies": {
