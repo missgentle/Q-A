@@ -45,17 +45,7 @@ _我的npm最近越来越不好用，所以后面我使用yarn为例，使用npm
 ```
 使用命令参数-dev添加的依赖包就会被记录在"devDependencies"字段中
 
-- 如果想要使用ts作为开发语言，接下来请参考这个链接：https://github.com/missgentle/Q-A/tree/master/Guide/express    
-进行以下相关操作：
-    - 引入node的类型定义文件
-    - 创建tsconfig.json文件
-    - 安装ts-node与typescript
-    - 安装nodemon工具
-    - 创建nodemon.json文件
-    - 修改package.json文件
-
 - webpack不会更改代码中除import、export 语句以外的部分。如果还想使用其它ES2015特性，那还需要安装Babel转译器来帮你做浏览器兼容。
-
 
 然后根目录下添加.babelrc文件，内容示例如下(具体请参考：https://juejin.im/post/5c19c5e0e51d4502a232c1c6)
 
@@ -64,6 +54,15 @@ _我的npm最近越来越不好用，所以后面我使用yarn为例，使用npm
   "presets": ["env"]
 }
 ```
+
+- 如果想要使用ts作为开发语言，接下来请参考这个链接：https://github.com/missgentle/Q-A/tree/master/Guide/express    
+进行以下相关操作：
+    - 引入node的类型定义文件
+    - 创建tsconfig.json文件
+    - 安装ts-node与typescript
+    - 安装nodemon工具
+    - 创建nodemon.json文件
+    - 修改package.json文件
 
 - loader(模块转换器)和plugin是webpack中两个非常重要的概念：
 loader用于对模块的源代码进行转换，因为webpack本身只能识别js文件，所以需要各种各样的loader来帮助webpack处理加载不同资源文件，本质是一个函数。
@@ -82,11 +81,13 @@ html-webpack-plugin可以根据模板自动生成html代码，并自动引用css
 HotModuleReplacementPlugin 热更新
 optimize-css-assets-webpack-plugin 不同组件中重复的css可以快速去重
 
-所以现在让我们一口气安装一大波loader和插件：
+所以现在让我们一口气安装一大波loader和插件(当然也可以需要的时候再逐个安装)：
 
-`yarn babel-loader css-loader html-loader html-webpack-plugin mini-css-extract-plugin ts-loader url-loader --dev`
+`yarn add babel-loader css-loader html-loader html-webpack-plugin mini-css-extract-plugin ts-loader url-loader --dev`
 
 _以上提及的所有依赖包我的经验是：不管用不用，反正先都装上也没坏处，因为就算装了，甚至是import了，只要没有真正使用，webpack是不会打包进去的。_
+
+- 
 
 
 
