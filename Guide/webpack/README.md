@@ -66,7 +66,7 @@ _我的npm最近越来越不好用，所以后面我使用yarn为例，使用npm
 
  - 安装 @types/jquery ：运行命令 `yarn add @types/jquery --dev`
  - 安装 jquery ：运行命令 `yarn add jquery `
- ** 注意安装时带或不带 --dev 是有区别的，安装完看看package.json文件变化就知道了 **
+ ** 注意安装时带或不带 --dev 是有区别的，不带则安装一个要打包到生产环境的安装包，带则安装一个要打包到开发环境的安装包，安装完看看package.json文件变化就知道了 **
 
 #### 7 loader(模块转换器)和plugin是webpack中两个非常重要的概念：
 loader用于对模块的源代码进行转换，因为webpack本身只能识别js文件，所以需要各种各样的loader来帮助webpack处理加载不同资源文件，本质是一个函数。
@@ -99,7 +99,7 @@ _以上提及的所有依赖包我的经验是：不管用不用，反正先都�
 
 #### 9 根目录下创建 webpack 的配置文件：webpack.config.js 或 webpack.config.ts(如果有上述5的操作的话)
 
-在 webpack 4 中，可以无须任何配置使用。配置文件比在终端(terminal)中手动输入大量命令(使用 CLI 选项方式)要高效的多。这里以js为例：
+在 webpack 4 中，可以无须任何配置使用。配置文件比在终端(terminal)中手动输入大量命令(使用 CLI 选项方式)要高效的多。我们可以通过配置方式指定 loader 规则(loader rules)、插件(plugins)、解析选项(resolve options)，以及许多其他增强功能。这里以js为例：
 
 ```
 const path = require('path');
@@ -255,6 +255,8 @@ devServer: {
   ```
   
   这样之后就可以在cmd中键入 `yarn start` 启动，而不需要 `webpack-dev-server --config webpack.config.js`了
+  
+  _如果 webpack.config.js 存在，则 webpack 命令将默认选择使用它。使用 --config 选项只是向你表明，可以传递任何名称的配置文件。_
   
   浏览器打开 http://localhost:8082  就可以看到你的页面啦~
 
