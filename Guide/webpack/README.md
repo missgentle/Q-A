@@ -234,7 +234,8 @@ devServer: {
 ```
 这里需要安装 webpack-dev-server 目的是为了实现实时重新加载，在 localhost:8082 下建立服务，并将output： dist 目录下的文件，作为可访问文件。
 
-让我们在 package.json 文件中添加一个 script 脚本，可以直接运行开发服务器(dev server)：
+#### 10 添加 script 脚本
+用 CLI 这种方式来运行本地的 webpack 不是特别方便，我们可以设置一个快捷方式。在 package.json 文件中添加一个 script 脚本，可以直接运行开发服务器(dev server)：
 
 ```
 {
