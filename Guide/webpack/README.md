@@ -69,6 +69,7 @@ _我的npm最近越来越不好用，所以后面我使用yarn为例，使用npm
  ** 注意安装时带或不带 --dev 是有区别的，不带则安装一个要打包到生产环境的安装包，带则安装一个要打包到开发环境的安装包，安装完看看package.json文件变化就知道了 **
   - 在 tsconfig.json 文件中添加一个编译参数` "esModuleInterop": true, `
   - 稍后还要在webpack.config.js增加一些原则(第9条再说)
+  - 使用时在ts文件中`import 'jquery';`即可
 
 #### 7 loader(模块转换器)和plugin是webpack中两个非常重要的概念：
 loader用于对模块的源代码进行转换，因为webpack本身只能识别js文件，所以需要各种各样的loader来帮助webpack处理加载不同资源文件，本质是一个函数。
@@ -91,7 +92,7 @@ optimize-css-assets-webpack-plugin 不同组件中重复的css可以快速去重
 
 `yarn add css-loader html-loader html-webpack-plugin mini-css-extract-plugin url-loader --dev`
 
-_以上提及的所有依赖包我的经验是：不管用不用，反正先都装上也没坏处，因为就算装了，甚至是import了，只要没有真正使用，webpack是不会打包进去的。_
+_以上提及的所有依赖包我的经验是：不管用不用，反正先都装上也没坏处，因为就算装了只要没有使用，webpack是不会打包进去的。_
 
 #### 8 构造项目结构
 
