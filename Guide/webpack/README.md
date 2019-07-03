@@ -311,6 +311,10 @@ loader处理顺序是从下到上，从右到左的，如
   浏览器打开 http://localhost:8082/webpack-dev-server  还可以看到你最终打包出来的项目结构
   
   <img src="webpack-4.png">
+  
+  为了保证每次webpack-dev-server重启都会先清除之前打包的旧文件，可以看到我add了一个插件clean-webpack-plugin，并在webpack.config.js文件最上面有：
+  
+  `const CleanWebpackPlugin = require('clean-webpack-plugin');`
 
 
 
