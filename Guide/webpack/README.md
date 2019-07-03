@@ -64,9 +64,11 @@ _我的npm最近越来越不好用，所以后面我使用yarn为例，使用npm
     
 #### 6 如果还想要使用jQ
 
- - 安装 @types/jquery ：运行命令 `yarn add @types/jquery --dev`
+ - 安装 @types/jquery expose-loader：运行命令 `yarn add @types/jquery expose-loader --dev`
  - 安装 jquery ：运行命令 `yarn add jquery `
  ** 注意安装时带或不带 --dev 是有区别的，不带则安装一个要打包到生产环境的安装包，带则安装一个要打包到开发环境的安装包，安装完看看package.json文件变化就知道了 **
+  - 在 tsconfig.json 文件中添加一个编译参数` "esModuleInterop": true, `
+  - 稍后还要在webpack.config.js增加一些原则(第9条再说)
 
 #### 7 loader(模块转换器)和plugin是webpack中两个非常重要的概念：
 loader用于对模块的源代码进行转换，因为webpack本身只能识别js文件，所以需要各种各样的loader来帮助webpack处理加载不同资源文件，本质是一个函数。
@@ -104,17 +106,16 @@ _以上提及的所有依赖包我的经验是：不管用不用，反正先都�
 ```
 const path = require('path');
 const webpack = require('webpack');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
-const TITLE = 'Webpack WebApp'; 
-
 module.exports = {
-  mode: 'development',
-  entry: './src/script/index.ts',
-  output: {
-    filename: 'bundle.js',
-    path: path.resolve(__dirname, 'dist')
+  mode: 'development',  //webpack4必须要指定的参数，'development' or 'production'
+  entry: './src/script/index.ts',  //入口，可以是包含多个入口的对象
+  output: {  //出口只能有一个
+    filename: 'script/[name].js',  //输出的文件名
+    path: path.resolve(__dirname, '/dist')  //dist作为构建过程产生的代码最小化和优化后的“输出”目录最终将在浏览器中加载
   },
   optimization: {
     splitChunks: {
@@ -135,21 +136,21 @@ module.exports = {
   },
   plugins: [
   	new HtmlWebpackPlugin({ 
-        title: TITLE,
-        filename: `index.html`,
-        favicon: './static/img/heart.png',
-        template: `temp/index.ejs`,
-        chunks: [ 'index', 'vendor'],
+        title: 'Webpack WebApp',
+        filename: 'index.html',
+        favicon: './static/img/icon.png',
+        template: 'temp/index.ejs',
+        chunks: [ 'main', 'vendor'],
     }),
     new webpack.HashedModuleIdsPlugin(),
     new webpack.ProvidePlugin({}),
     new MiniCssExtractPlugin({
-      filename: "css/[name].[hash:8].css",
+      filename: 'css/[name].[hash:8].css',
       chunkFilename: "[id].css"
     })
   ],
   module: {
-    rules: [
+    rules: [  //loader规则。webpack 根据正则表达式，来确定应该查找哪些文件，并将其提供给指定的 loader。
       {
         test: /\.css$/,
         use: [
@@ -162,24 +163,18 @@ module.exports = {
           'css-loader'
         ]
       },
-      {
-        test: /\.html$/,
-        use: {
-          loader: 'html-loader'
-        }
-      },
 
       {
-        test: /\.(png|svg|gif|jpg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+        test: /\.(png|svg|gif|jpg|woff|woff2|eot|ttf|otf)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
         exclude: /node_modules/,
         use: [
           {
-              loader: "url-loader",
+              loader: "file-loader",
               options: {
                 name: "[name].[hash:5].[ext]",
                 limit: 1024,
                 outputPath: "img",
-                publicPath: "../../"
+                publicPath: "../"
               } 
           }
         ]
@@ -234,6 +229,38 @@ devServer: {
 ```
 这里需要安装 webpack-dev-server 目的是为了实现实时重新加载，在 localhost:8082 下建立服务，并将output： dist 目录下的文件，作为可访问文件。
 
+loader原则需要则添加，不需要则去掉，比如若使用jq，则rules中就需要这一段：
+
+```
+{
+     test: require.resolve('jquery'),
+     use: [{
+            loader: 'expose-loader',
+            options: 'jQuery'
+          },
+          {
+            loader: 'expose-loader',
+             options: '$'
+          }
+     ]
+}
+```
+
+实际顺序应该是你的项目中除了js文件外还需要打包什么类型的文件，就yarn add对应需要的loader协助转译为webpack能够处理的模块，并添加对应的rules告诉webpack用哪些loader，按何种顺序来处理非js类型的文件。
+
+loader处理顺序是从下到上，从右到左的，如
+```
+{
+     test: /\.ts(x?)$/,
+     exclude: /node_modules/,
+     use: [
+          'babel-loader',
+          'ts-loader'
+     ]
+},
+```
+意思是当遇到ts或tsx文件时(其中不包括node_modules文件夹下的，因为node_modules文件夹下的所有内容会单独打包到一个叫vendor的chunk块中)，先使用ts-loader处理生成es5(如果tsconfig.json中配置"target": "es5"的话)，输出再交给babel-loader做浏览器兼容，最后交给webpack打包。
+
 #### 10 添加 script 脚本
 用 CLI 这种方式来运行本地的 webpack 不是特别方便，我们可以设置一个快捷方式。在 package.json 文件中添加一个 script 脚本，可以直接运行开发服务器(dev server)：
 
@@ -243,14 +270,35 @@ devServer: {
   "version": "1.0.0",
   "main": "index.ts",
   "scripts": {
-   "start": "webpack-dev-server --config webpack.config.js"
+    "start": "webpack-dev-server --config webpack.config.js",
   },
   "license": "MIT",
   "devDependencies": {
-    ...
-  }
+    "@babel/core": "^7.4.5",
+    "@types/jquery": "^3.3.30",
+    "@types/node": "^12.0.10",
+    "@types/webpack": "^4.4.34",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.0.6",
+    "babel-preset-env": "^1.7.0",
+    "clean-webpack-plugin": "^3.0.0",
+    "css-loader": "^3.0.0",
+    "expose-loader": "^0.7.5",
+    "file-loader": "^4.0.0",
+    "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.2.0",
+    "mini-css-extract-plugin": "^0.7.0",
+    "postcss-loader": "^3.0.0",
+    "ts-loader": "^6.0.4",
+    "ts-node": "^8.3.0",
+    "typescript": "^3.5.2",
+    "url-loader": "^2.0.1",
+    "webpack": "^4.35.0",
+    "webpack-cli": "^3.3.5",
+    "webpack-dev-server": "^3.7.2"
+  },
   "dependencies": {
-    ...
+    "jquery": "^3.4.1"
   }
 }
   ```
@@ -260,6 +308,10 @@ devServer: {
   _如果 webpack.config.js 存在，则 webpack 命令将默认选择使用它。使用 --config 选项只是向你表明，可以传递任何名称的配置文件。_
   
   浏览器打开 http://localhost:8082  就可以看到你的页面啦~
+  
+  浏览器打开 http://localhost:8082/webpack-dev-server  还可以看到你最终打包出来的项目结构
+  
+  <img src="webpack-4.png">
 
 
 
