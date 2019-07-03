@@ -16,8 +16,6 @@ cmd /k cd /d %base%
 
 如果使用npm包管理器就在命令行窗口中键入`npm init -y`
 
-<img src='webpack-1.png'>
-
 如果使用yarn包管理器就在命令行窗口中键入`yarn init -y`
 
 <img src='webpack-2.png'>
