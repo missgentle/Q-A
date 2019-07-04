@@ -28,7 +28,8 @@ https://juejin.im/post/5b456ee4e51d455d94713404
         "experimentalDecorators": true,
         "outDir": "build",
         "lib": [
-            "es6"
+            "dom",
+            "es5"
         ]
     },
     "exclude": [
