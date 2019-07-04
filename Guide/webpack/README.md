@@ -136,7 +136,8 @@ module.exports = {
   entry: './src/script/index.ts',  //入口，可以是包含多个入口的对象
   output: {  //出口只能有一个
     filename: 'script/[name].js',  //输出的文件名
-    path: path.resolve(__dirname, '/dist')  //dist作为构建过程产生的代码最小化和优化后的“输出”目录最终将在浏览器中加载
+    //dist作为构建过程产生的代码最小化和优化后的“输出”目录最终将在浏览器中加载
+    path: path.resolve(__dirname, '/dist')  
   },
   optimization: {
     splitChunks: {
@@ -171,7 +172,8 @@ module.exports = {
     })
   ],
   module: {
-    rules: [  //loader规则。webpack 根据正则表达式，来确定应该查找哪些文件，并将其提供给指定的 loader。
+    //loader规则。webpack 根据正则表达式，来确定应该查找哪些文件，并将其提供给指定的 loader。
+    rules: [  
       {
         test: /\.css$/,
         use: [
