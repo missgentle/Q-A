@@ -88,8 +88,8 @@ _我的npm最近越来越不好用，所以后面我使用yarn为例，使用npm
  - 安装 jquery ：运行命令 `yarn add jquery `
  ** 注意安装时带或不带 --dev 是有区别的，不带则安装一个要打包到生产环境的安装包，带则安装一个要打包到开发环境的安装包，安装完看看package.json文件变化就知道了 **
   - 在 tsconfig.json 文件中添加一个编译参数` "esModuleInterop": true, `或者`"allowSyntheticDefaultImports": true,`
-  - 稍后还要在webpack.config.js增加一些原则(第9条再说)
-  - 使用时在ts文件中`import $ from 'jquery';`即可
+  - 稍后还要在 webpack.config.js 增加一些原则(第9条)
+  - 使用时在ts文件中`import 'jquery';`即可
 
 #### 7 loader(模块转换器)和plugin是webpack中两个非常重要的概念：
 loader用于对模块的源代码进行转换，因为webpack本身只能识别js文件，所以需要各种各样的loader来帮助webpack处理加载不同资源文件，本质是一个函数。
