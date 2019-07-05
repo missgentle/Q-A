@@ -79,3 +79,10 @@ self.addEventListener('message', function (e) {
 
 #### 4 在需要保持ws连接的页面添加代码监听sw转发的消息
 
+```
+window.onmessage = function(e){
+    console.log(e.data)
+    ......
+}
+```
+
