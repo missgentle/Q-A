@@ -17,7 +17,7 @@ $( window ).on( 'load', ()=>{
     });
 ```
 
-#### 2 在开始创建ws连接的页面再单独添加一行代码（给sw发个信号让它创建ws连接）
+#### 2 在开始创建ws连接的页面再单独添加一行代码（给sw发个信号让它创建ws连接，需要断开连接的时候类似）
 
 ```
 navigator.serviceWorker.controller.postMessage(JSON.stringify(imsg));
