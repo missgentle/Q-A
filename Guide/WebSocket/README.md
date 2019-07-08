@@ -1,6 +1,7 @@
 ## WebSocket 实现刷新 or 切换到同源页面不断连
 
 > 这大概是史无前例的 ws (WebSocket) 与 sw (ServiceWorker) 的完美结合。
+> 首先要强调一点：**该解决方案要用于生产环境中的话你需要使用https协议。**
 
 #### 1 在需要保持ws连接的页面添加代码注册sw
 
@@ -85,4 +86,9 @@ window.onmessage = function(e){
     ......
 }
 ```
+
+#### 5 更多延伸
+
+- 因为sw是完全异步的所以做消息本地存储是不能使用同步API的,建议使用indexDB
+- 消息提示可以在sw中使用self.registration.showNotification显示通知并监听notificationclick点击事件进行交互
 
