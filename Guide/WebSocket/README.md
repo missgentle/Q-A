@@ -105,15 +105,26 @@ window.onmessage = function(e){
 
 #### 1.创建share.worker.ts文件
 
+> 这里并没有对连入worker的页面做区分，可初始时通过发送不同的消息来区分不同的页面，也便于worker选择性的发送消息给某个页面
+
 ```
 const serverURL = 'ws://127.0.0.1:7777/chat';
 let socket = null;
 let user = null;
 
+let portList = [];
+
 onconnect = function(e) {
-    var port = e.ports[0];
+
+    let port = e.ports[0];
 
     port.addEventListener('message', function(e) {
+
+      let taget = e.currentTarget;
+      if (portList.indexOf(taget) === -1) {
+        portList.push(taget);
+      }
+
       const clientMsg = JSON.parse(e.data);
       if(clientMsg.msgType = 'Identity'){
         user = JSON.parse(clientMsg.msgContent);
@@ -133,15 +144,17 @@ onconnect = function(e) {
               };
               socket.send(JSON.stringify(imsg));
             }else{
-              port.postMessage(JSON.parse(ev.data));
+              portList.forEach(item=>{
+                item.postMessage(JSON.parse(ev.data));
+              })
             }
           }
         }
       }
     });
-
     port.start();
 }
+
 ```
 
 #### 2.创建声明文件shareworker.d.ts
@@ -161,6 +174,8 @@ declare var onconnect: (e:MessageEvent) => void
 ```
 
 #### 3.单页ts里new SharedWorker
+
+> iframe里嵌套的页面也是类似的，如果你希望他能直接收到shared worker发的消息的话
 
 ```
 initWorker(){
@@ -203,10 +218,11 @@ initWorker(){
 </html>
 ```      
 
-#### 5.
-
-
-#### 6.更多延伸
+#### 5.更多延伸
 
 - 既然是单页实际只是嵌套iframe的src切换，并没有真正的同源页面之间的切换。然后还要写一些逻辑避免用户直接更改url进入iframe嵌套页面。
-- 其实没必要使用sharedworker的，既然是单页项目，直接new Worker(),然后单页与iframe使用postmessage的方式通信也行，也省了声明文件但通信麻烦了些。具体敬请期待我的跨域项目示例近期将会更新~
+- 其实没必要使用sharedworker的，既然是单页项目，直接new Worker(),然后单页与iframe使用postmessage的方式通信也行，也省了声明文件但通信麻烦了些。
+- sharedworker的一些缺陷和注意点：
+    - 如果修改了sharedworker的内容需要将所有接入的页面都关闭（或只留一个页面然后刷新）才能释放旧的sharedworker然后更新。
+    - 当某个sharedworker实例被创建后，其他页面再创建将会直接接入已创建的实例，不会再创建新的，也不会重新获取该实例的js，只在第一次创建时获取。
+    - sharedworker实例使用onMessage监听时不需要显示调用port.start();且onMessage多次实现会被覆盖； 而使用port.addEventListener('message', ()=>{})则必须显示调用port.start();且多次实现会追加监听
