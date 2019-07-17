@@ -7,7 +7,8 @@
 
 1. 表格：https://www.ag-grid.com/
 
-2. JS动效库：https://animejs.com/
+2. JS动效库：https://animejs.com/  &  https://greensock.com/docs
 
 3. 颜色选择器：https://dhtmlx.com/docs/products/dhtmlxColorPicker/
 
+4. PPT模板网站：http://www.ppt118.com/
