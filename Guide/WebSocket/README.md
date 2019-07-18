@@ -117,14 +117,11 @@ let portList = [];
 onconnect = function(e) {
 
     let port = e.ports[0];
+    if (portList.indexOf(port) === -1) {
+      portList.push(port);
+    }
 
     port.addEventListener('message', function(e) {
-
-      let taget = e.currentTarget;
-      if (portList.indexOf(taget) === -1) {
-        portList.push(taget);
-      }
-
       const clientMsg = JSON.parse(e.data);
       if(clientMsg.msgType = 'Identity'){
         user = JSON.parse(clientMsg.msgContent);
