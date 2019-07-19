@@ -13,4 +13,5 @@
 
 4. PPT模板网站：http://www.ppt118.com/
 
-5. 素材：花瓣 https://huaban.com/ 千图 https://www.58pic.com/ 阿里 https://www.iconfont.cn/ 500px https://500px.com/
+5. 素材：花瓣 https://huaban.com/ 千图 https://www.58pic.com/ 阿里(图标) https://www.iconfont.cn/ 
+   500px(摄影) https://500px.com/ (插画) https://dribbble.com/ 视觉中国 http://www.shijue.me/
