@@ -1,6 +1,12 @@
-TypeScript-specific	TS特性	这些规则发现与TypeScript特性相关的错误		
+## TypeScript-specific	TS特性	这些规则发现与TypeScript特性相关的错误	
+
 规则名	功能	配置参数	举例	备注
-adjacent-overload-signatures	强制函数重载为连续的。通过将自然相关的条目分组在一起，提高可读性和组织性	无	"adjacent-overload-signatures": true	TS
+
+- adjacent-overload-signatures	
+  - 功能：强制函数重载为连续的。通过将自然相关的条目分组在一起，提高可读性和组织性	
+  - 配置参数: 无	
+  - 举例: "adjacent-overload-signatures": true	
+  - 备注: TS
 ban-types	禁止使用特定类型。不禁止使用相应的运行时对象	列表	"ban-types": [true, ["Object", "Use {} instead."], ["String"]]	TS
 member-access	"需要为类成员明确的可见性声明，提高代码可读性。
 缺少可见性声明的成员可能是类内部件意外泄漏的迹象
