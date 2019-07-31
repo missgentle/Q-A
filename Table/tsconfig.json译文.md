@@ -14,7 +14,7 @@ https://www.typescriptlang.org/docs/handbook/tsconfig-json.html
   
   - 示例tsconfig.json示例文件:
   
-  ```
+```
   //使用"files"属性
   {
     "compilerOptions": {
@@ -39,10 +39,12 @@ https://www.typescriptlang.org/docs/handbook/tsconfig-json.html
         "tsc.ts",
         "diagnosticInformationMap.generated.ts"
     ]
-    }
-    
-    //使用"include"和"exclude"属性
-    {
+  }
+```
+ 
+```
+//使用"include"和"exclude"属性
+{
     "compilerOptions": {
         "module": "system",
         "noImplicitAny": true,
@@ -52,14 +54,15 @@ https://www.typescriptlang.org/docs/handbook/tsconfig-json.html
         "sourceMap": true
     },
     "include": [
-        "src/**/*"
+        "src/**/* "
     ],
     "exclude": [
         "node_modules",
         "**/*.spec.ts"
     ]
-    }
-    
+}
+```
+
 ## 细节
 
 - "compilerOptions"可以被忽略，这时编译器会使用默认值。在这里查看完整的编译器选项列表。
