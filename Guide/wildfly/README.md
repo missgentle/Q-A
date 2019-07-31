@@ -16,6 +16,8 @@ JBOSS_HOME：D:\SoftWare\wildfly-15.0.0.Final Path：;%JBOSS_HOME%\bin
 
 运行D:\SoftWare\wildfly-15.0.0.Final\bin\add-user.bat (若admin用户已存在可以修改密码，或者换一个名字。另外注意输入密码时，终端并不显示输入内容，并不是输不进去)
 
+<img src='wfly-1.png'>
+
 #### 4 启动wildfly：运行D:\SoftWare\wildfly-15.0.0.Final\bin\standalone.bat (窗口不要关)
 
 浏览器打开http://127.0.0.1:9990/
