@@ -23,7 +23,7 @@ JBOSS_HOME：D:\SoftWare\wildfly-15.0.0.Final Path：;%JBOSS_HOME%\bin
 浏览器打开http://127.0.0.1:9990/
 使用刚创建的用户登录进入wildfly控制台
 
-<img src='https://github.com/missgentle/Q-A/blob/master/Guide/wildfly/1.png'>
+<img src='wfly-2.png'>
 
 #### 5 修改management默认端口
 
@@ -61,12 +61,12 @@ JBOSS_HOME：D:\SoftWare\wildfly-15.0.0.Final Path：;%JBOSS_HOME%\bin
 打开http://127.0.0.1:9990/console/index.html 选Deployments选项卡，    
 左侧栏点+号下拉菜单-Upload Deployment 将war包拖拽上去-可修改包名和运行时的名字-打开自启动-finish 
 
-<img src='https://github.com/missgentle/Q-A/blob/master/Guide/wildfly/2.png'>
+<img src='wfly-3.png'>
 可以看到这里Context Root的值是war包名ux_backend-0.0.1
 
 点view可查看war包结构
 
-<img src='https://github.com/missgentle/Q-A/blob/master/Guide/wildfly/3.png'>
+<img src='wfly-4.png'>
 
 - 手动部署
 
@@ -89,7 +89,7 @@ _(如ux_backend/build/libs/exploded/ux_backend-0.0.1.war/WEB-INF 其中build是�
 
 图3的jboss-web.xml文件不起作用就是文件存放的路径不对，正确打出来的war包中的jboss-web.xml文件应该在这个位置
 
-<img src='https://github.com/missgentle/Q-A/blob/master/Guide/wildfly/4.png'>
+<img src='wfly-5.png'>
 
 
 此时访问http://127.0.0.1:9990/console/index.html#deployments 也可以看到部署的war包Context Root的值变成了/ux
