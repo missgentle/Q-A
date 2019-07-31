@@ -46,4 +46,82 @@ GUI更新会被保存在一个队列中等到JS引擎线程空闲时执行。所
 
 ### Worker API使用
 
+1.在你需要创建worker的文件里(比如main.ts)添加如下代码：
 
+```
+let myWorker = new Worker('worker.js'); 
+myWorker.postMessage(myMsg)); 
+myWorker.onmessage = function(e) {
+     console.log('Message received from worker');
+     console.log(e.data);
+}
+```
+
+2.worker.js文件
+
+```
+self.addEventListener('message', (e) => {
+   if(typeof(e.data) === 'string'){
+      portList.forEach(item=>{
+         item.postMessage(JSON.parse(ev.data));
+      }
+   }
+});
+```
+
+### SharedWorkerWorker API使用
+
+1.在你需要创建worker的文件里(比如main.ts)添加如下代码：
+
+```
+let mySWorker = new SharedWorker('shared.worker.js'); 
+mySWorker.port.start();
+mySWorker.port.postMessage(myMsg)); 
+mySWorker.port.onmessage = function(e) {
+     console.log('Message received from worker');
+     console.log(e.data);
+}
+```
+
+2.创建声明文件shareworker.d.ts
+
+```
+interface SharedWorker extends EventTarget, AbstractWorker {
+  port: MessagePort;
+};
+
+declare var SharedWorker: {
+  prototype: SharedWorker;
+  new(scriptURL: any, name: any): SharedWorker;
+  new(scriptURL: any): SharedWorker;
+}
+
+declare var onconnect: (e:MessageEvent) => void
+```
+
+3.shared.worker.js文件
+
+```
+let portList = [];
+onconnect = function(e) {
+
+    let port = e.ports[0];
+    if (portList.indexOf(port) === -1) {
+      portList.push(port);
+    }
+
+    port.addEventListener('message', (e) => {
+      if(typeof(e.data) === 'string'){
+        portList.forEach(item=>{
+           item.postMessage(JSON.parse(ev.data));
+         }
+      }
+    });
+    port.start();
+}
+```
+
+- sharedworker的一些缺陷和注意点：
+    - 如果修改了sharedworker的内容需要将所有接入的页面都关闭（或只留一个页面然后刷新）才能释放旧的sharedworker然后更新。
+    - 当某个sharedworker实例被创建后，其他页面再创建将会直接接入已创建的实例，不会再创建新的，也不会重新获取该实例的js，只在第一次创建时获取。
+    - sharedworker实例使用onMessage监听时不需要显示调用port.start();且onMessage多次实现会被覆盖； 而使用port.addEventListener('message', ()=>{})则必须显示调用port.start();且多次实现会追加监听
