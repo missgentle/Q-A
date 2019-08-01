@@ -46,37 +46,35 @@ GUI更新会被保存在一个队列中等到JS引擎线程空闲时执行。所
 
 ### Worker API使用
 
-1.在你需要创建worker的文件里(比如main.ts)添加如下代码：
+1.在你需要创建worker的文件里(比如main.ts)添加类似如下代码：
 
 ```
 let myWorker = new Worker('worker.js'); 
-myWorker.postMessage(myMsg)); 
+myWorker.postMessage(JSON.stringify(myMsg)); 
 myWorker.onmessage = function(e) {
      console.log('Message received from worker');
      console.log(e.data);
 }
 ```
 
-2.worker.js文件
+2.worker.js文件示例
 
 ```
 self.addEventListener('message', (e) => {
    if(typeof(e.data) === 'string'){
-      portList.forEach(item=>{
-         item.postMessage(JSON.parse(ev.data));
-      }
+      postMessage(JSON.parse(ev.data));
    }
 });
 ```
 
 ### SharedWorkerWorker API使用
 
-1.在你需要创建worker的文件里(比如main.ts)添加如下代码：
+1.在你需要创建worker的文件里(比如main.ts)添加类似如下代码：
 
 ```
 let mySWorker = new SharedWorker('shared.worker.js'); 
 mySWorker.port.start();
-mySWorker.port.postMessage(myMsg)); 
+mySWorker.port.postMessage(JSON.stringify(myMsg)); 
 mySWorker.port.onmessage = function(e) {
      console.log('Message received from worker');
      console.log(e.data);
@@ -99,7 +97,7 @@ declare var SharedWorker: {
 declare var onconnect: (e:MessageEvent) => void
 ```
 
-3.shared.worker.js文件
+3.shared.worker.js文件示例
 
 ```
 let portList = [];
