@@ -1,7 +1,9 @@
 ## Web Worker 让你的JS “多线程”？
 
 声明在先：此文参考 https://segmentfault.com/a/1190000012925872#articleHeader10
-建议先行阅读该文前半部分
+建议先行阅读该文前半部分    
+
+兼容性请自行查看 https://caniuse.com/
 
 ### 概述
 
