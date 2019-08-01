@@ -69,7 +69,7 @@ self.addEventListener('message', (e) => {
 });
 ```
 
-### SharedWorkerWorker API使用
+### SharedWorker API使用
 
 1.在你需要创建worker的文件里(比如main.ts)添加类似如下代码：
 
