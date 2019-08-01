@@ -124,6 +124,6 @@ onconnect = function(e) {
 - sharedworker的一些缺陷和注意点：
     - 如果修改了sharedworker的内容需要将所有接入的页面都关闭（或只留一个页面然后刷新）才能释放旧的sharedworker然后更新。
     - 当某个sharedworker实例被创建后，其他页面再创建将会直接接入已创建的实例，不会再创建新的，也不会重新获取该实例的js，只在第一次创建时获取。
-    - sharedworker实例使用onMessage监听时不需要显示调用port.start();且onMessage多次实现会被覆盖； 而使用port.addEventListener('message', ()=>{})则必须显示调用port.start();且多次实现会追加监听
+    - sharedworker实例使用onMessage监听时不需要显示调用port.start()*（所有页面&worker中都可去掉）*;且onMessage多次实现会被覆盖； 而使用port.addEventListener('message', ()=>{})则必须显示调用port.start()*（worker中必须有&页面有一个即可）*;且多次实现会追加监听
     
 - sharedworke调试方法参见 https://github.com/missgentle/Q-A/issues/16
