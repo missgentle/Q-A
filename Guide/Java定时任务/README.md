@@ -31,7 +31,7 @@ class WebSocketHandler : AbstractWebSocketHandler() {
 
 ### 2.JDK对定时任务调度的线程池支持：ScheduledExecutorService
 
-由于Timer存在的问题，JDK5之后便提供了基于线程池的定时任务调度：ScheduledExecutorService。
+由于Timer存在的问题，JDK5之后便提供了基于线程池的定时任务调度：ScheduledExecutorService。    
 设计理念：每一个被调度的任务都会被线程池中的一个线程去执行，因此任务可以并发执行，而且相互之间不受影响。
 
 
