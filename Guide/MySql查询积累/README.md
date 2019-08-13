@@ -31,9 +31,9 @@ val sql = "SELECT FLOOR(SUM(offline_time - online_time)/86400000+1)AS level, id,
 
 也可以保留子查询，先对一个表进行处理再进行连接
 ```
-select totalTimes, id, name, figure from
-  (select sum(offline_time - online_time) totalTimes, user_id from  cu_sys.online_history  group by user_id) x
-  left join cu_sys.user_info u
-  on x.user_id = u.id
-
+val sql = "SELECT level, id, name, figure " +
+         "FROM(" +
+         "SELECT FLOOR(SUM(offline_time - online_time)/86400000+1)AS level, user_id FROM cu_sys.online_history GROUP BY user_id" +
+         ") x LEFT JOIN cu_sys.user_info u" +
+         "ON x.user_id = u.id WHERE u.id = '" + userId + "';"
 ```
