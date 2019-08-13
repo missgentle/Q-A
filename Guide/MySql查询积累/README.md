@@ -20,20 +20,20 @@ override fun getUserInfoByID(userId:String): UserInfo{
 
 这里用到了分组求和，子查询，右连接
 
-WHERE的优先级高于GROUP BY 所以直接可以去掉子查询
+WHERE的优先级高于GROUP BY 所以直接可以去掉子查询和GROUP BY
 
 ```
 val sql = "SELECT FLOOR(SUM(offline_time - online_time)/86400000+1)AS level, id, name, figure " +
-        "FROM cu_sys.online_history x RIGHT JOIN cu_sys.user_info y ON x.user_id=y.id WHERE y.id = '" + userId + "'" +
-        "GROUP BY id;"
+        "FROM cu_sys.online_history x RIGHT JOIN cu_sys.user_info y ON x.user_id=y.id WHERE y.id = '" + userId + "';" 
 ```
 
 
-也可以保留子查询，先对一个表进行处理再进行连接
+也可以保留子查询，先对一个表进行处理再进行连接但这么写太绕了
+好像还变麻烦了（这样写GROUP BY是不能去掉的，RIGHT JOIN是因为online_history该用户记录可能是空）
 ```
 val sql = "SELECT level, id, name, figure " +
          "FROM(" +
          "SELECT FLOOR(SUM(offline_time - online_time)/86400000+1)AS level, user_id FROM cu_sys.online_history GROUP BY user_id" +
-         ") x LEFT JOIN cu_sys.user_info u" +
+         ") x RIGHT JOIN cu_sys.user_info u" +
          "ON x.user_id = u.id WHERE u.id = '" + userId + "';"
 ```
