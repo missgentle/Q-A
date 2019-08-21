@@ -9,7 +9,7 @@
 
 2. JS动效库：https://animejs.com/  &  https://greensock.com/docs
 
-3. 颜色选择器：https://dhtmlx.com/docs/products/dhtmlxColorPicker/
+3. 颜色选择器colorPicker：https://dhtmlx.com/docs/products/dhtmlxColorPicker/
 
 4. PPT模板网站：http://www.ppt118.com/
 
@@ -19,3 +19,5 @@
 6. Can I use： https://caniuse.com/
 
 7. 在线画流程图：https://www.processon.com/
+
+8. 时间选择器datePicker: http://www.daterangepicker.com/
