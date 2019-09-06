@@ -68,6 +68,6 @@
  
 再杀死进程，如此处进程号为17801：$ kill -9 17801
 
-再去到/opt/wildfly/bin路径下启动wildfly，可能使用的命令：
-$ cd /opt/wildfly/bin
+再去到/opt/wildfly/bin路径下启动wildfly，可能使用的命令：    
+$ cd /opt/wildfly/bin    
 $ sh ./run
