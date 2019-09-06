@@ -223,3 +223,85 @@ initWorker(){
     - 如果修改了sharedworker的内容需要将所有接入的页面都关闭（或只留一个页面然后刷新）才能释放旧的sharedworker然后更新。
     - 当某个sharedworker实例被创建后，其他页面再创建将会直接接入已创建的实例，不会再创建新的，也不会重新获取该实例的js，只在第一次创建时获取。
     - sharedworker实例使用onMessage监听时不需要显示调用port.start();且onMessage多次实现会被覆盖； 而使用port.addEventListener('message', ()=>{})则必须显示调用port.start();且多次实现会追加监听
+    
+## sharedWorker 实现 WebSocket 断线重连
+
+> 声明在先：参考链接 https://www.jianshu.com/p/5297732db7f2
+
+```
+const wssURL = 'wss://XXX.XX.XX.XX:XXXX/XX/chat';
+let socket = null;
+let userId = null;
+
+let portList = [];
+let heartBeatTime = 60;
+
+onconnect = function(e) {
+
+    let port = e.ports[0];
+    if (portList.indexOf(port) === -1) {
+      portList.push(port);
+    }
+
+    var heartCheck = { 
+      timeout: heartBeatTime*1000,
+      timeoutObj: null,
+      reset: function () { 
+        clearTimeout(this.timeoutObj); 
+        return this;
+      }, 
+      start: function () {
+        this.timeoutObj = setTimeout(function () {
+          wsReconnection();
+        },this.timeout)
+      } 
+    } 
+
+    port.addEventListener('message', (e) => {
+      if(typeof(e.data) === 'string'){
+        const clientMsg = JSON.parse(e.data);
+        console.log(clientMsg);
+        if(clientMsg.msgType === 'Identity'){
+          userId = clientMsg.msgContent;
+          if(socket == null && userId !== null){
+            wsReconnection();
+          }
+        }
+        else{
+          socket.send(e.data);
+        }
+      }else{
+        socket.send(e.data);
+      }
+      
+    });
+    port.start();
+
+    wsReconnection = () => {
+      socket = new WebSocket(wssURL);
+      socket.onopen = (ev) => {
+        ...
+        heartCheck.reset().start();
+      }
+      socket.onmessage = (ev) => {
+        heartCheck.reset().start();
+        const msg = JSON.parse(ev.data);
+        portList.forEach(item=>{
+          item.postMessage(JSON.parse(ev.data));
+        })
+      }
+      socket.onclose = (ev) => {
+        portList.forEach(item=>{
+          item.postMessage('closed');
+          item.postMessage('reconnection');
+        });
+      }
+      socket.onerror = function () {
+        setTimeout(function () {
+          wsReconnection();
+        },5000)
+      }
+    }
+}
+
+```
