@@ -46,3 +46,28 @@
 <img src='CRT-10.png'>
 
 #### 12.现在就可以键入linux命令啦
+
+常用命令：
+- 进入根目录：$ cd /
+- 返回上一级目录：$ cd ..
+- 显示当前目录下的文件：$ ls
+- 进入当前目录下的某个文件夹：$ cd dirname （如cd opt/wildfly/bin）
+- 打开某文件：$ vi filename （如 vi log）
+- 进入文本输入模式：按A/a或I/i
+- 退出编辑模式进入末行模式：按: （末行模式下：q! 【强制退出不保存】 q【退出不保存】 wq【退出并保存后面也可以加个！】）
+- 运行某文件：$ sh ./filename （如sh ./run）
+- 查看进程号：$ ps -ef | grep PName （如ps -ef | grep wildfly）
+- 杀死进程：$ kill -9 PID （如kill -9 15228）
+- 强制中断：Ctrl+C
+
+#### 13.杀死并重启wildfly
+
+先查看进程获取进程号$ ps -ef | grep wildfly
+
+<img src='CRT-11.png'>
+ 
+再杀死进程，如此处进程号为17801：$ kill -9 17801
+
+再去到/opt/wildfly/bin路径下启动wildfly，可能使用的命令：
+$ cd /opt/wildfly/bin
+$ sh ./run
