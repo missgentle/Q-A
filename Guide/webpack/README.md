@@ -350,7 +350,7 @@ output: {
     path: path.resolve(__dirname, '/dist')
 }
 ```
-这里的[name]取值就是main。
+这里的[name]取值就是main。这也直接导致了new HtmlWebpackPlugin时chunks: [ 'main', 'vendor'],的取值。
   
   最后，为了保证每次webpack-dev-server重启都会先清除之前打包的旧文件，可以看到我add了一个插件clean-webpack-plugin，并在webpack.config.js文件最上面有：
   
