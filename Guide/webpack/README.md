@@ -186,19 +186,15 @@ module.exports = {
           'css-loader'
         ]
       },
-
       {
-        test: /\.(png|svg|gif|jpg|woff|woff2|eot|ttf|otf)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        exclude: /node_modules/,
+        test: /\.(png|svg|jpg|gif)$/,
         use: [
-          {
+        {
               loader: "file-loader",
               options: {
-                name: "[name].[hash:5].[ext]",
-                limit: 1024,
-                outputPath: "img",
-                publicPath: "../"
-              } 
+                name: "[name].[ext]",
+                outputPath: "./img/"
+              }
           }
         ]
       },
