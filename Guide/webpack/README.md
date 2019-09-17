@@ -336,8 +336,8 @@ loader处理顺序是从下到上，从右到左的，如
   
   <img src="webpack-4.png">    
   
-  这里我之前一直很困惑的一点，为什么打包出来的js文件叫main而不是index，后来知道原来`entry: './src/script/index.ts'
-`是单入口的一种缩写，具体内容如下：    
+  这里我之前一直很困惑的一点：为什么打包出来的js文件叫main而不是index，    
+  后来知道原来`entry: './src/script/index.ts'`是单入口的一种缩写，具体内容如下：    
 ```
 entry: {
     main: './src/script/index.ts'
@@ -350,9 +350,9 @@ output: {
     path: path.resolve(__dirname, '/dist')
 }
 ```
-这里的[name]得到的name就是main。
+这里的[name]取值就是main。
   
-  为了保证每次webpack-dev-server重启都会先清除之前打包的旧文件，可以看到我add了一个插件clean-webpack-plugin，并在webpack.config.js文件最上面有：
+  最后，为了保证每次webpack-dev-server重启都会先清除之前打包的旧文件，可以看到我add了一个插件clean-webpack-plugin，并在webpack.config.js文件最上面有：
   
   `const CleanWebpackPlugin = require('clean-webpack-plugin');`
 
