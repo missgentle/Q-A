@@ -26,8 +26,10 @@
 `emsdk update`    
 `emsdk install latest`    
 
-书里坑第二点这里根本没提emsdk update命令。我一开始按照书上的步骤，显示没安装Python，提示我'python' 不是内部或外部命令了我才知道要安装Python。
-安装完Python直接运行emsdk install latest还是不成功，我还以为是因为要翻墙，准备去找国内镜像了。
+书里坑第二点这里根本没提emsdk update命令。我一开始按照书上的步骤，提示我'python' 不是内部或外部命令了我才知道要安装Python。
+安装完Python直接运行emsdk install latest还是不成功提示`Error: Downloading URL 'https://storage.googleapis.com/webassembly/emscripten-releases-builds/win/bc367c257409d676e71c5511383228b7aabf1689/wasm-binaries.zip': <urlopen error [WinError 10060] 
+由于连接方 在一段时间后没有正确答复或连接的主机没有反应，连接尝试失败。>
+  Installation failed!`我还以为是因为要翻墙，准备去找国内镜像了。
 结果找到文章开头的文章，才知道原来还需要先emsdk update。
 但这里也不必将emsdk替换成emsdk.bat，也没有网上说的要下一个小时，我只等了大概十分钟。我的运行截图如下：    
 
