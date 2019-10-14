@@ -53,7 +53,7 @@
 - 初始化环境变量    
 `emsdk_env.bat`    
 
-其实就是配环境变量，省的自己手动去配了。但这里Windows就不能使用source ./emsdk_env.sh了。我的运行截图如下：    
+其实就是配环境变量，省的自己手动去配了。但这里Windows就不能使用source ./emsdk_env.sh了。最后可以执行emcc -v检验一下。我的运行截图如下：    
 
 <img src='img/emsdk-3.png'>    
 
