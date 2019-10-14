@@ -41,6 +41,7 @@
 
 引用下书中原文：    
 > 这里的“激活”实际上就是指将当前Emscripten工具链所需要的各种环境变量信息都写入.emscripten配置文件中，以供emcc等编译器工具使用。    
+
 我的运行截图如下：    
 
 <img src='img/emsdk-2.png'>    
