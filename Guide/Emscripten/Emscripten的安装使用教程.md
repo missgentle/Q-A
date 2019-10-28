@@ -103,6 +103,8 @@ return 0;
 
 <img src='img/emsdk-6.png'>    
 
-也可以在Web浏览器中运行(直接将html文件拖到地址栏)    
+也可以在Web浏览器中运行(直接双击html文件)    
 
 <img src='img/emsdk-7.png'>    
+
+Emscripten会在当前html中创建两个数据输区域：顶端Canvas画布主要用于测试源代码中OpenGL相关的部分功能；底部可交互区模拟出一个只能进行数据输出的命令行控制台。
