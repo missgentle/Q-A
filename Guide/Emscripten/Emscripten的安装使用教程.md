@@ -50,7 +50,7 @@
 
 这里可以看到都配了什么东西，最后也提示了Windows用户怎样环境变量全局化，但以防潜在的副作用：
 将环境变量指向了Emscripten内置的Node.js、Python、Java，若系统中安装了这些组件的其他版本，可能引发冲突。
-所以还是不全局的好。    
+所以还是不全局的好。不全局的弊端时以后在新建的控制台中都需要配置一次环境变量，才可使用Emscripten核心命令emcc。    
 
 - 初始化环境变量    
 `emsdk_env.bat`    
@@ -61,6 +61,48 @@
 
 “纸上得来终觉浅，绝知此事要躬行”。好，到此环境已经搭建好了。
 
+### 4.简单使用示例    
 
+- 新建一个C文件名为hello_emscripten.cc(我的放在D:\WorkSpace\WebAssembly\test目录下)    
 
+```
+#include <iostream>
 
+using namespace std;
+
+int add(int x, int y){
+return x + y;
+}
+
+int main(int argc, char **argv){
+cout << "Hello,Emscripten!\n" << "Result:" << add(10, 20) << endl;
+return 0;
+}
+```    
+
+- 初始化环境变量再回到工作目录(如果本次命令窗口中已经进行或做了全局化则略过此步骤)    
+
+`cd D:\SoftWare\emsdk`    
+`emsdk_env.bat`    
+
+`cd D:\WorkSpace\WebAssembly\test`    
+
+- 编译到ASM.js    
+
+`emcc hello_emscripten.cc -s ASM_JS=1 -o hello_emscripten.html`    
+
+<img src='img/emsdk-4.png'>    
+<img src='img/emsdk-5.png'>    
+
+这里的 -o hello_emscripten.html 会同时生成同名的.html,.js和.wasm文件，也可以-o hello_emscripten.js只生成.js和.wasm文件文件。
+如果没有 -o xxx.xx，则默认会自动在当前目录生成一个a.out.js文件。    
+
+我们可以直接使用node命令执行js    
+
+`node hello_emscripten.js`    
+
+<img src='img/emsdk-6.png'>    
+
+也可以在Web浏览器中运行(直接将html文件拖到地址栏)    
+
+<img src='img/emsdk-7.png'>    
