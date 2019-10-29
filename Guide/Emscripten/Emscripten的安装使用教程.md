@@ -184,7 +184,7 @@ Emscripten无法将涉及浏览器层API的C/C++源程序(如使用了OpenGL技�
     
     但这次因为使用了fetch远程加载，直接双击html文件打开会受到CORS限制，所以需要启服务将我们的html和wasm部署在web上。    
     
-    <img src='img/emsdk-9.png'>    
+    <img src='img/emsdk-10.png'>    
 
     2 编译成动态库的方式(Dynamic Library)    
     `emcc emscripten-standalone.cc -s WASM=1 -s SIDE_MODULE=1 -o emscripten-standalone-dynamic.wasm`    
