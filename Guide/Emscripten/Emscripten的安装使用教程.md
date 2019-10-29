@@ -184,7 +184,8 @@ Emscripten无法将涉及浏览器层API的C/C++源程序(如使用了OpenGL技�
     
    注意，在Name Mangling特性不生效的情况下，Emscripten会给导出的函数的函数名前加上下划线做前缀，因此从exports对象中获取导出函数时需要使用“_add”.
     
-   但这次因为使用了fetch远程加载，直接双击html文件打开会受到CORS限制，所以需要启服务将我们的html和wasm部署在web上。    
+   但这次因为使用了fetch远程加载，直接双击html文件打开会受到CORS限制，所以需要启服务将我们的html和wasm部署在web上。
+   这里我使用wildfly进行部署，参照wildfly教程前6步：  https://github.com/missgentle/Q-A/tree/master/Guide/wildfly    
     
    <img src='img/emsdk-10.png'>    
 
