@@ -61,9 +61,9 @@
 
 “纸上得来终觉浅，绝知此事要躬行”。好，到此环境已经搭建好了。
 
-### 4.简单使用示例    
+### 4.简单示例一    
 
-- 新建一个C文件名为hello_emscripten.cc(我的放在D:\WorkSpace\WebAssembly\test目录下)    
+- 新建一个C文件名为hello_emscripten.cc(我放在D:\WorkSpace\WebAssembly\test目录下)    
 
 ```
 #include <iostream>
@@ -107,4 +107,56 @@ return 0;
 
 <img src='img/emsdk-7.png'>    
 
-Emscripten会在当前html中创建两个数据输区域：顶端Canvas画布主要用于测试源代码中OpenGL相关的部分功能；底部可交互区模拟出一个只能进行数据输出的命令行控制台。
+Emscripten会在当前html中创建两个数据输区域：顶端Canvas画布主要用于测试源代码中OpenGL相关的部分功能；底部可交互区模拟出一个只能进行数据输出的命令行控制台。    
+
+ > ASM.js模块类型声明标识：“use asm”与“almost asm”
+
+“use asm”告诉浏览器定义的函数内部所有代码都遵循ASM.js的语法和规则，即将其视为一个标准的ASM.js模块。这样才浏览器内部的JS引擎才会按照ASM.js模块的数据分配与编译方式来执行定义在该模块内的方法。    
+而实际上，浏览器对ASM.js代码的可优化条件非常严格。一旦某些语法格式或边界条件没有满足要求，整个ASM.js代码就会直接退化为正常的JS代码，大大降低了执行效率。    
+所以在Emscripten工具链中，对于一些因为含有特殊语法结构而无法被转译为标准ASM.js模块的C/C++源程序，Emscripten会将其对应的ASM.js模块类型声明标识改写为“almost asm”，以表示该ASM.js模块不可被优化。
+
+### 4.简单示例二    
+
+- 连接C/C++与WebAssembly    
+
+Emscripten无法将涉及浏览器层API的C/C++源程序(如使用了OpenGL技术)与独立的Wasm模块打包在一起。对此的解决办法是：只将不涉及浏览器层API接口，
+仅具有纯计算和方法调用过程的代码打包到Wasm模块中；对于那些需要与浏览器进行交互或JS接口调用的代码，则将其按照普通的JS代码进行打包并交由浏览器执行。
+
+  - Standalone类型    
+  
+  该类型的Wasm应用只适用于那些仅包含纯计算和方法调用逻辑的C/C++源程序。即源程序中不能有任何涉及需要与浏览器API进行交互、发送远程请求(HTTP/Socket)，
+  以及与数据显示、输入等I/O相关的代码。构建该类型的Wasm应用时只会生成独立的Wasm二进制模块，而不会帮助构建任何用于连接该模块与上层JS环境的脚本文件。
+  
+  - 新建一个C文件名为emscripten-standalone.cc.cc(我还是放在D:\WorkSpace\WebAssembly\test目录下)    
+  
+  ```
+  //"胶水工具" 解决了大多数原生到Web的跨平台问题
+  #include <emscripten.h>
+  
+  //条件编译 在C++编译器中以C语言的规则来处理代码，防止Name Mangling处理
+  #ifdef _cplusplus
+  extern "C"{
+  #endif
+  
+  //利用宏防止函数被DCE
+  EMSCRIPTEN_KEEPALIVE int add(int x, int y){
+  return x + y;
+  }
+  
+  #ifdef _cplusplus
+  }
+  #endif
+  ```    
+  
+    1使用增强型优化器的方式(Optimizer)    
+    `emcc emscripten-standalone.cc -Os -s WASM=1 -o emscripten-standalone.wasm`    
+
+    2编译成动态库的方式(Dynamic Library)    
+    `emcc emscripten-standalone.cc -s WASM=1 -s SIDE_MODULE=1 -o emscripten-standalone.wasm`    
+
+  - Dependent类型    
+  `emcc dependent.cc -s WASM=1 -s 'EXTRA_EXPORTED_RUNTIME_METHODS=["ccall"]' --post-js post-script.js -o dependent.js`    
+
+
+
+
