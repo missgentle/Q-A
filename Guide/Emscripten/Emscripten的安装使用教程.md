@@ -125,26 +125,26 @@ Emscripten无法将涉及浏览器层API的C/C++源程序(如使用了OpenGL技�
   该类型的Wasm应用只适用于那些仅包含纯计算和方法调用逻辑的C/C++源程序。即源程序中不能有任何涉及需要与浏览器API进行交互、发送远程请求(HTTP/Socket)，
   以及与数据显示、输入等I/O相关的代码。构建该类型的Wasm应用时只会生成独立的Wasm二进制模块，而不会帮助构建任何用于连接该模块与上层JS环境的脚本文件。
   
-  - 新建一个C文件名为emscripten-standalone.cc.cc(我还是放在D:\WorkSpace\WebAssembly\test目录下)    
-  
-  ```
-  //"胶水工具" 解决了大多数原生到Web的跨平台问题
-  #include <emscripten.h>
-  
-  //条件编译 在C++编译器中以C语言的规则来处理代码，防止Name Mangling处理
-  #ifdef _cplusplus
-  extern "C"{
-  #endif
-  
-  //利用宏防止函数被DCE
-  EMSCRIPTEN_KEEPALIVE int add(int x, int y){
-  return x + y;
-  }
-  
-  #ifdef _cplusplus
-  }
-  #endif
-  ```    
+    - 新建一个C文件名为emscripten-standalone.cc.cc(我还是放在D:\WorkSpace\WebAssembly\test目录下)    
+    
+    ```
+    //"胶水工具" 解决了大多数原生到Web的跨平台问题
+    #include <emscripten.h>
+    
+    //条件编译 在C++编译器中以C语言的规则来处理代码，防止Name Mangling处理
+    #ifdef _cplusplus
+    extern "C"{
+    #endif
+    
+    //利用宏防止函数被DCE
+    EMSCRIPTEN_KEEPALIVE int add(int x, int y){
+    return x + y;
+    }
+    
+    #ifdef _cplusplus
+    }
+    #endif
+    ```    
   
     1使用增强型优化器的方式(Optimizer)    
     `emcc emscripten-standalone.cc -Os -s WASM=1 -o emscripten-standalone.wasm`    
