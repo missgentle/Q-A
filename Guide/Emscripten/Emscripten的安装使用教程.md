@@ -150,12 +150,14 @@ Emscripten无法将涉及浏览器层API的C/C++源程序(如使用了OpenGL技�
   
     1 使用增强型优化器的方式(Optimizer)    
     `emcc emscripten-standalone.cc -Os -s WASM=1 -o emscripten-standalone-optimizer.wasm`    
-    其中-Os参数是优化的关键，该参数告知编译器以“第4等级”的优化策略优化目标代码，进而删除其中没有被用到并且与ERE(Emscripten Runtime Environment, Emscripten运行时环境)相关的所有信息。但这种方式可能并不适用于功能较为复杂或使用了C++11及以上版本语法特性的Wasm应用。    
     
-    <img src='img/emsdk-8.png'>    
-    <img src='img/emsdk-9.png'>    
+   其中-Os参数是优化的关键，该参数告知编译器以“第4等级”的优化策略优化目标代码，进而删除其中没有被用到并且与ERE(Emscripten Runtime Environment, Emscripten运行时环境)相关的所有信息。但这种方式可能并不适用于功能较为复杂或使用了C++11及以上版本语法特性的Wasm应用。    
     
-    接下来，给出HTML与JS脚本代码：    
+  <img src='img/emsdk-8.png'>    
+  <img src='img/emsdk-9.png'>    
+  
+   接下来，给出HTML与JS脚本代码：    
+   
     ```
     <!DOCTYPE html>
     <html>
@@ -180,11 +182,12 @@ Emscripten无法将涉及浏览器层API的C/C++源程序(如使用了OpenGL技�
     </body>
     </html>
     ```    
-    注意，在Name Mangling特性不生效的情况下，Emscripten会给导出的函数的函数名前加上下划线做前缀，因此从exports对象中获取导出函数时需要使用“_add”.
     
-    但这次因为使用了fetch远程加载，直接双击html文件打开会受到CORS限制，所以需要启服务将我们的html和wasm部署在web上。    
+   注意，在Name Mangling特性不生效的情况下，Emscripten会给导出的函数的函数名前加上下划线做前缀，因此从exports对象中获取导出函数时需要使用“_add”.
     
-    <img src='img/emsdk-10.png'>    
+   但这次因为使用了fetch远程加载，直接双击html文件打开会受到CORS限制，所以需要启服务将我们的html和wasm部署在web上。    
+    
+   <img src='img/emsdk-10.png'>    
 
     2 编译成动态库的方式(Dynamic Library)    
     `emcc emscripten-standalone.cc -s WASM=1 -s SIDE_MODULE=1 -o emscripten-standalone-dynamic.wasm`    
