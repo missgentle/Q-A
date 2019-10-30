@@ -64,6 +64,28 @@ JBOSS_HOME：D:\SoftWare\wildfly-15.0.0.Final Path：;%JBOSS_HOME%\bin
 
 <img src='wfly-7.png'>    
 
+再者，这里还可以添加一些CORS配置：    
+
+```
+<server name="default-server">
+                <http-listener name="default" socket-binding="http" redirect-socket="https" enable-http2="true"/>
+                <https-listener name="https" socket-binding="https" security-realm="ApplicationRealm" enable-http2="true"/>
+                <host name="default-host" alias="localhost">
+                    <location name="/" handler="welcome-content"/>
+                    <location name="/upload" handler="upload-handler"/>
+                    <location name="/ux" handler="ux-handler"/>
+                    <filter-ref name="server-header"/>
+                    <filter-ref name="Access-Control-Allow-Origin"/>
+                    <filter-ref name="Access-Control-Allow-Methods"/>
+                    <filter-ref name="Access-Control-Allow-Headers"/>
+                    <filter-ref name="Access-Control-Allow-Credentials"/>
+                    <filter-ref name="Access-Control-Max-Age"/>
+                    <filter-ref name="gzipFilter" predicate="path-suffix['.css'] or path-suffix['.js'] or path-suffix['.xhtml']"/>
+                    <http-invoker security-realm="ApplicationRealm"/>
+                </host>
+            </server>
+```    
+
 #### 7 部署war包
 
 - Administration UI Console部署
