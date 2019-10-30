@@ -47,12 +47,22 @@ JBOSS_HOME：D:\SoftWare\wildfly-15.0.0.Final Path：;%JBOSS_HOME%\bin
     
 ```
 
-#### 6 禁用根目录自动导航到http://127.0.0.1:9990/console/index.html  (好像试了都没起作用)
+#### 6 禁用根目录自动导航到http://127.0.0.1:9990/console/index.html  (好像试了但没起作用)
 
 在standalone.xml中注掉
 `<location name="/" handler="welcome-content"/>`和
 `<file name="welcome-content" path="${jboss.home.dir}/welcome-content"/>`
-也可重写使其导航到你想要的url
+也可重写使其导航到你想要的url。比如：    
+
+<img src='wfly-6.png'>    
+
+这里我加了两个访问路径：    
+访问http://127.0.0.1:8080/ux/  对应我本地D:\SoftWare\wildfly-15.0.0.Final\ux    
+访问http://127.0.0.1:8080/upload/  对应我本地D:\SoftWare\wildfly-15.0.0.Final\ux\uploadFiles    
+
+所以当我在本地D:\SoftWare\wildfly-15.0.0.Final\ux\uploadFiles\2019-10\下放了一张图片dog.jpg，启动wildfly时，可以通过http://127.0.0.1:8080/upload/2019-10/dog.jpg 或 http://127.0.0.1:8080/ux/uploadFiles/2019-10/dog.jpg 访问到。    
+
+<img src='wfly-7.png'>    
 
 #### 7 部署war包
 
