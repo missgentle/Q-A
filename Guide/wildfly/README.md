@@ -52,7 +52,7 @@ JBOSS_HOME：D:\SoftWare\wildfly-15.0.0.Final Path：;%JBOSS_HOME%\bin
 在standalone.xml中注掉
 `<location name="/" handler="welcome-content"/>`和
 `<file name="welcome-content" path="${jboss.home.dir}/welcome-content"/>`
-也可重写使其导航到你想要的url。比如：    
+也可重写使其导航到你想要的url。还可以在这里追加你的自定义路径，比如：    
 
 <img src='wfly-6.png'>    
 
