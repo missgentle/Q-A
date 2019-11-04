@@ -156,7 +156,7 @@ Emscripten无法将涉及浏览器层API的C/C++源程序(如使用了OpenGL技�
   <img src='img/emsdk-8.png'>    
   <img src='img/emsdk-9.png'>    
   
-   接下来，给出HTML与JS脚本代码：    
+   接下来，给出HTML与JS脚本代码index-optimizer.html：    
    ```
    <!DOCTYPE html>
    <html>
@@ -192,12 +192,120 @@ Emscripten无法将涉及浏览器层API的C/C++源程序(如使用了OpenGL技�
     
    <img src='img/emsdk-10.png'>    
 
-   2 编译成动态库的方式(Dynamic Library)    
+   2 编译成动态库的方式(Dynamic Library)----(这个方式没成功)    
     `emcc emscripten-standalone.cc -s WASM=1 -s SIDE_MODULE=1 -o emscripten-standalone-dynamic.wasm`    
+  
+   这里添加一个index-dynamic.html：    
+   
+   ```
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Emscripten - Standalone WebAssembly Module - Dynamic</title>
+</head>
+<body>
+	<script type="text/javascript">
+		// 远程加载wasm模块
+		fetch('emscripten-standalone-dynamic.wasm').then(
+			response => response.arrayBuffer()
+		).then(bytes =>
+			WebAssembly.instantiate(bytes, {
+				// 向模块中导入用于初始化的env模块对象
+				env: {
+					memoryBase: 0,
+					tableBase: 0,
+					table: new WebAssembly.Table({
+						initial: 2,
+						element: 'anyfunc'
+					}),
+					abort: function(msg){
+						console.error(msg);
+					}
+				}
+			})
+		).then(result => {
+			// 从exports对象中获取模块对外暴露出的add方法
+			const exportFuncAdd = result.instance.exports['_add'];
+			// 调用add方法
+			let outcome = exportFuncAdd(10, 20);
+			console.log(outcome);
+		})
+	</script>
+</body>
+</html>
+   ```    
+   与Optimizer方式不同的是，这里需要在初始化wasm模块时，向其内部导入包含模块初始化资源的env命名空间对象，在这个对象中我们为模块提供了Table对象结构以及相关的初始化参数。    
 
   - Dependent类型    
-  `emcc dependent.cc -s WASM=1 -s 'EXTRA_EXPORTED_RUNTIME_METHODS=["ccall"]' --post-js post-script.js -o dependent.js`    
+  
+  Dependent类型与Standalone类型有所不同的是，该类型应用中一般含有大量与浏览器特定功能相关的方法调用。
+  比如C/C++源代码中使用了IO标准库，OpenGL等需要与宿主环境本身进行交互的相关技术。这部分代码需要Emscripten进行单独处理。    
+  
+  另外，由于wasm模块本身无法直接与浏览器进行交互，因此，Emscripten需要通过某种具有类似“胶水”功能的JS代码，
+  来将wasm模块与web浏览器在功能交互和数据资源传输层面连接起来。但这部分工作会由Emscripten来帮助我们完成。
+  
+  首先，新建一个C文件，名为emscripten-dependent.cc(我还是放在D:\WorkSpace\WebAssembly\test目录下)    
+  
+   ```
+    #include <emscripten.h>
+    #include <iostream>
+    
+    using namespace std;
+    
+    #ifdef __cplusplus
+    extern "C"{
+    #endif
+    
+    EMSCRIPTEN_KEEPALIVE void echo(int x){
+    cout << "The number you input is: " << x << endl;
+    }
+    
+    #ifdef __cplusplus
+    }
+    #endif
+ ```    
+  
+这里使用了cout对象来向控制台打印上层JS环境传入的一个整型数据。接下来，我们通过一段js代码来调用后续wasm模块暴露出的函数，以及其他相关主流程代码。    
+post-script.js文件：    
 
+```
+//向Module初始化完毕的钩子队列中加入待执行的内容
+__ATPOSTRUN__.push(() => {
+	//调用模块中暴露出的echo方法
+	Module.ccall('echo', null, ['number'], [10]);
+	//也可以这样调用
+	Module['asm']['_echo'](10);
+})
+```    
 
+执行命令编译C代码：      
+  `emcc emscripten-dependent.cc -s WASM=1 -s 'EXTRA_EXPORTED_RUNTIME_METHODS=["ccall"]' --post-js post-script.js -o dependent.js`    
+  
 
+最后通过html文件整合wasm模块index-dependent.html ：    
 
+```
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Emscripten - Dependent WebAssembly Module</title>
+</head>
+<body>
+	<script type="text/javascript">
+		var Module = {};
+
+		fetch('emscripten-dependent.wasm').then(
+			response => response.arrayBuffer()
+			).then((bytes) => {
+				Module.wasmBinary = bytes;
+				var script = document.createElement('script');
+				script.src = "dependent.js";
+				document.body.appendChild(script);
+			});
+	</script>
+</body>
+</html>
+```    
+
+  
