@@ -185,10 +185,10 @@ Emscripten无法将涉及浏览器层API的C/C++源程序(如使用了OpenGL技�
    注意，在Name Mangling特性不生效的情况下，Emscripten会给导出的函数的函数名前加上下划线做前缀，因此从exports对象中获取导出函数时需要使用“_add”.
     
    但这次因为使用了fetch远程加载，直接双击html文件打开会受到CORS限制，所以需要启服务将我们的html和wasm部署在web上。
-   简单的，可以使用命令`python -m SimpleHTTPServer 8081`在当前目录临时启动一个http服务，即可访问http://127.0.0.1:8081/index-optimizer.html
+   简单的，可以使用命令`python -m SimpleHTTPServer 8081`在当前目录临时启动一个http服务，即可访问http://127.0.0.1:8081/index-optimizer.html    
    也可使用wildfly进行部署，具体参照wildfly教程前6步：  https://github.com/missgentle/Q-A/tree/master/Guide/wildfly    
    
-   这里我以wildfly方法为例吗，将html和wasm拷贝到本地路径D:\SoftWare\wildfly-15.0.0.Final\ux下，启动wildfly，
+   这里我都以wildfly方法为例，将html和wasm拷贝到本地路径D:\SoftWare\wildfly-15.0.0.Final\ux下，启动wildfly，
    访问http://127.0.0.1:8080/ux/index-optimizer.html 
    F12控制台输出如下：
     
