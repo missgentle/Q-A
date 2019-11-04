@@ -293,12 +293,15 @@ __ATPOSTRUN__.push(() => {
 </head>
 <body>
 	<script type="text/javascript">
+		//初始化Module全局对象，由Emscrpten自动完成内容填充
 		var Module = {};
 
 		fetch('emscripten-dependent.wasm').then(
 			response => response.arrayBuffer()
 			).then((bytes) => {
+				//填充模块数据
 				Module.wasmBinary = bytes;
+				//动态异步载入Emscrpten生成的“胶水”脚本文件
 				var script = document.createElement('script');
 				script.src = "dependent.js";
 				document.body.appendChild(script);
