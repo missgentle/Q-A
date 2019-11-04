@@ -2,9 +2,8 @@
 
 > 声明在先：本文参考掘金好文 https://juejin.im/entry/5bcd43a5e51d457a502a7554    
 
-首先想吐槽一下，《深入浅出WebAssembly》书中介绍的安装步骤有点坑，而且只针对MasOS让我感到心里苦(T_T)。
-网上一堆千篇一律的文章也让人头疼，也不知道是不是真实实践得来的(+_+)?
-好了不再多BB了，开始我的表演。    
+首先想吐槽一下，《深入浅出WebAssembly》书中第五章介绍的安装步骤有点坑，而且只针对MasOS让我感到心里苦(T_T)。
+网上一堆千篇一律的文章也让人头疼，也不知道是不是真实实践得来的(+\_+)?好了不再多BB了，开始我的表演。    
 
 ### 1.安装Python并配置环境变量    
 
@@ -145,6 +144,8 @@ Emscripten无法将涉及浏览器层API的C/C++源程序(如使用了OpenGL技�
    }
    #endif
    ```    
+   
+   原以为这里的__cplusplus是一个_，后来看到编译出来的方法名还是经过了Name Mangling，才发现这是两个_。
     
   构建Standalone类型的Wasm应用有两种方式：
   
@@ -194,7 +195,7 @@ Emscripten无法将涉及浏览器层API的C/C++源程序(如使用了OpenGL技�
     
    <img src='img/emsdk-10.png'>    
 
-   2 编译成动态库的方式(Dynamic Library)----(这个方式没成功)    
+   2 编译成动态库的方式(Dynamic Library)----(这个方式没成功，应该就是env对象那里有问题，但还是目前还是没搞定)    
     `emcc emscripten-standalone.cc -s WASM=1 -s SIDE_MODULE=1 -o emscripten-standalone-dynamic.wasm`    
   
    这里添加一个index-dynamic.html：    
@@ -280,9 +281,9 @@ __ATPOSTRUN__.push(() => {
 })
 ```    
 
-执行命令编译C代码：      
+执行命令编译C代码(不知道是不是系统原因，反正我windows系统用书上给的命令会报错)：      
   `emcc emscripten-dependent.cc -s WASM=1 -s EXTRA_EXPORTED_RUNTIME_METHODS=[ccall] --post-js post-script.js -o emscripten-dependent.js`    
-  
+<img src='img/emsdk-12.png'>    
 
 最后通过html文件整合wasm模块index-dependent.html ：    
 
