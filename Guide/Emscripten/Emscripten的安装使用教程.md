@@ -279,7 +279,7 @@ __ATPOSTRUN__.push(() => {
 ```    
 
 执行命令编译C代码：      
-  `emcc emscripten-dependent.cc -s WASM=1 -s 'EXTRA_EXPORTED_RUNTIME_METHODS=["ccall"]' --post-js post-script.js -o dependent.js`    
+  `emcc emscripten-dependent.cc -s WASM=1 -s EXTRA_EXPORTED_RUNTIME_METHODS=[ccall] --post-js post-script.js -o emscripten-dependent.js`    
   
 
 最后通过html文件整合wasm模块index-dependent.html ：    
@@ -303,7 +303,7 @@ __ATPOSTRUN__.push(() => {
 				Module.wasmBinary = bytes;
 				//动态异步载入Emscrpten生成的“胶水”脚本文件
 				var script = document.createElement('script');
-				script.src = "dependent.js";
+				script.src = "emscripten-dependent.js";
 				document.body.appendChild(script);
 			});
 	</script>
