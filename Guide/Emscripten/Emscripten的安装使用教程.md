@@ -1,6 +1,7 @@
 ## Emscripten的安装使用教程    
 
 > 声明在先：本文参考掘金好文 https://juejin.im/entry/5bcd43a5e51d457a502a7554    
+> 代码示例摘自书籍《深入浅出WebAssembly》(于航/著)第五章
 
 首先想吐槽一下，《深入浅出WebAssembly》书中第五章介绍的安装步骤有点坑，而且只针对MasOS让我感到心里苦(T_T)。
 网上一堆千篇一律的文章也让人头疼，也不知道是不是真实实践得来的(+\_+)?好了不再多BB了，开始我的表演。    
@@ -152,7 +153,7 @@ Emscripten无法将涉及浏览器层API的C/C++源程序(如使用了OpenGL技�
    1 使用增强型优化器的方式(Optimizer)    
     `emcc emscripten-standalone.cc -Os -s WASM=1 -o emscripten-standalone-optimizer.wasm`    
     
-   其中-Os参数是优化的关键，该参数告知编译器以“第4等级”的优化策略优化目标代码，进而删除其中没有被用到并且与ERE(Emscripten Runtime Environment, Emscripten运行时环境)相关的所有信息。但这种方式可能并不适用于功能较为复杂或使用了C++11及以上版本语法特性的Wasm应用。    
+   其中-Os参数是优化的关键，该参数告知编译器以“第4等级”的优化策略优化目标代码，进而删除其中没有被用到并且与ERE(Emscripten Runtime Environment, Emscripten运行时环境)相关的所有信息。但这种方式可能并不适用于功能较为复杂或使用了C++11及以上版本语法特性的Wasm应用。WASM=1标识用于设置编译器生成目标文件类型为wasm二进制模块。    
     
   <img src='img/emsdk-8.png'>    
   <img src='img/emsdk-9.png'>    
@@ -197,8 +198,9 @@ Emscripten无法将涉及浏览器层API的C/C++源程序(如使用了OpenGL技�
 
    2 编译成动态库的方式(Dynamic Library)----(这个方式没成功，应该就是env对象那里有问题，但还是目前还是没搞定)    
     `emcc emscripten-standalone.cc -s WASM=1 -s SIDE_MODULE=1 -o emscripten-standalone-dynamic.wasm`    
+    编译命令添加SIDE_MODULE=1标识让Emscripten将C/C++源代码文件编译成一个WebAssembly动态链接库。    
   
-   这里添加一个index-dynamic.html：    
+   这里再添加一个index-dynamic.html：    
    
    ```
 <!DOCTYPE html>
@@ -268,7 +270,9 @@ Emscripten无法将涉及浏览器层API的C/C++源程序(如使用了OpenGL技�
     #endif
  ```    
   
-这里使用了cout对象来向控制台打印上层JS环境传入的一个整型数据。接下来，我们通过一段js代码来调用后续wasm模块暴露出的函数，以及其他相关主流程代码。    
+这里使用了cout对象来向控制台打印上层JS环境传入的一个整型数据，即使用了C/C++源代码中使用了IO标准库。    
+
+接下来，我们通过一段js代码来调用后续wasm模块暴露出的函数，以及其他相关主流程代码。    
 post-script.js文件：    
 
 ```
@@ -280,12 +284,31 @@ __ATPOSTRUN__.push(() => {
 	Module['asm']['_echo'](10);
 })
 ```    
+由于Emscripten会自动生成用于连接模块与浏览器的JS脚本，因此，我们不需要考虑应该如何加载模块，以及如何为模块提供初始化数据。
+只需要编写模块初始化后需要执行的主流程代码即可。    
+这里我们通过Module.ccall全局函数调用了echo方法，Module.ccall就是由自动生成的脚本文件中封装好的“胶水”方法，用于调用模块内部函数。    
+代码中还使用了名为__ATPOSTRUN__的数组结构，放入该数组结构中的函数会在模块和ERE初始化完成后依次执行。
+因此改数组结构也被称为ERE内部的一个生命周期钩子(Hook)队列。    
+ERE内部定义了多种类型的钩子队列结构，放入这些队列的函数会在ERE的生命周期的特定阶段被执行。    
 
-执行命令编译C代码(不知道是不是系统原因，反正我windows系统用书上给的命令会报错)：      
-  `emcc emscripten-dependent.cc -s WASM=1 -s EXTRA_EXPORTED_RUNTIME_METHODS=[ccall] --post-js post-script.js -o emscripten-dependent.js`    
+```
+var __ATPRERUN__ = [] // functions called before the runtime is initialized
+var __ATINIT__  = [] // functions called during startup
+var __ATMAIN__  = [] // functions called when main() is to be run 
+var __ATEXIT__  = [] // functions called during shutdown
+var __ATPOSTRUN__  = [] // functions called after the runtime has exited
+```    
+
+之后，我们执行命令编译C代码 (不知道是不是系统原因，反正我windows系统用书上给的命令会报错)：      
+  `emcc emscripten-dependent.cc -s WASM=1 -s EXTRA_EXPORTED_RUNTIME_METHODS=[ccall] --post-js post-script.js -o emscripten-dependent.js`     
+EXTRA_EXPORTED_RUNTIME_METHODS 标识以数组形式记录所有需要被导出的Emscripten运行时方法，
+以便Emscripten能够将这些方法的定义直接绑定到全局的Module对象中。    
+--post-js参数用于指定需要被追加到“胶水”脚本文件的JS代码，将被拼接到“胶水文件的尾部”；
+使用--pre-js编译参数可添加需要在Module对象初始化前执行的JS代码，即追加到脚本文件的头部。    
+
 <img src='img/emsdk-12.png'>    
 
-最后通过html文件整合wasm模块index-dependent.html ：    
+最后，通过html文件整合wasm模块index-dependent.html ：    
 
 ```
 <!DOCTYPE html>
@@ -313,5 +336,11 @@ __ATPOSTRUN__.push(() => {
 </body>
 </html>
 ```    
+
+与Standalone类型初始化不同，这里需要在加载脚本文件之前使用远程获取的wasm二进制数据填充Module全局对象的wasmBinary属性，
+再通过动态加载的方式将“胶水”脚本文件绑定并加载到当前的html中。    
+
+“胶水”脚本文件中的代码在执行时会自动检测当前全局作用域是否存在名为Module的JS对象，以及该对象的wasmBinary属性是否包含一段有效的wasm模块二进制数据。
+若一切正常，则脚本文件会自动完成ERE初始化，模块加载和实例化等过程，并在相应时期依次执行各钩子队列中的方法。
 
 <img src='img/emsdk-11.png'>    
