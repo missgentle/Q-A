@@ -344,3 +344,5 @@ EXTRA_EXPORTED_RUNTIME_METHODS 标识以数组形式记录所有需要被导出�
 若一切正常，则脚本文件会自动完成ERE初始化，模块加载和实例化等过程，并在相应时期依次执行各钩子队列中的方法。
 
 <img src='img/emsdk-11.png'>    
+
+想深入了解wasm编译流程的可以啃啃源码：emsdk\fastcomp\emscripten\tools\shared.py    
