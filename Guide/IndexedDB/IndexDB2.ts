@@ -15,49 +15,54 @@ export default class IndexDB {
 
   private getDB(tableName:string):Promise<IDBDatabase> {
     if (!this.db) {
-        this.db = new Promise((resolve, reject) => {
-          let openreq:IDBOpenDBRequest = indexedDB.open('UX-store', 1);
-          openreq.onerror = () => {
-            reject(openreq.error);
-          };
-          openreq.onupgradeneeded = () => {
-            openreq.result.createObjectStore(tableName);
-          };
-          openreq.onsuccess = () =>  {
-            resolve(openreq.result);
-          };
-        });
-      }
-      return this.db;
+      this.db = new Promise((resolve, reject) => {
+        let openreq:IDBOpenDBRequest = indexedDB.open('UX-store', 1);
+        openreq.onerror = () => {
+          reject(openreq.error);
+        };
+        openreq.onupgradeneeded = () => {
+          openreq.result.createObjectStore(tableName);
+        };
+        openreq.onsuccess = () =>  {
+          resolve(openreq.result);
+        };
+      });
     }
+    return this.db;
+  }
 
 
   private withStore(type:IDBTransactionMode, tableName:string): Promise<IDBObjectStore> {
-     return this.getDB(tableName).then((db) => {
-       return new Promise(function(resolve, reject) {
+    return new Promise((resolve, reject) => {
+      this.getDB(tableName).then((db) => {
         var transaction = db.transaction(tableName, type);
-        transaction.oncomplete = function() {
-          resolve(transaction.objectStore(tableName));
-        };
         transaction.onerror = function() {
           reject(transaction.error);
+        };
+        transaction.oncomplete = function() {
+          resolve(transaction.objectStore(tableName));
         };
       });
     });
   }
 
     getAll(tableName:string): Promise<indexDBdata> {
-      return this.withStore( 'readonly', tableName).then((store) => {
-        return {
-          count:store.count().result,
-          data:store.getAll().result
-        };
+      return new Promise((resolve, reject) => {
+        this.withStore( 'readonly', tableName).then((store) => {
+          resolve({
+            count:store.count().result,
+            // data:store.getAll().result
+            data:store.get("xuqin2019-11-25 09:09:25*38eda550-0f20-11ea-ba94-4d1f87bc1ac1").result
+          });
+        });
       });
     }
 
     get(tableName:string, key:string): Promise<WSRecord.Message> {
-      return this.withStore( 'readonly', tableName).then((store) => {
-        return store.get(key).result;
+      return new Promise((resolve, reject) => {
+        this.withStore( 'readonly', tableName).then((store) => {
+          resolve(store.get(key).result);
+        });
       });
     }
 
