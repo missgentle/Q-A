@@ -25,6 +25,6 @@
 
 7. 在线画流程图：https://www.processon.com/
 
-8. 时间选择器datePicker: http://www.daterangepicker.com/    
+8. 时间选择器datePicker: http://www.daterangepicker.com/
 
 9.开发者社区：https://stackoverflow.com/    
