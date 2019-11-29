@@ -13,11 +13,18 @@
 
 4. PPT模板网站：http://www.ppt118.com/
 
-5. 素材：花瓣 https://huaban.com/ 千图 https://www.58pic.com/ 阿里(图标) https://www.iconfont.cn/ 
-   500px(摄影) https://500px.com/ (插画) https://dribbble.com/ 视觉中国 http://www.shijue.me/
+5. 素材：    
+  花瓣 https://huaban.com/     
+  千图 https://www.58pic.com/     
+  阿里(图标) https://www.iconfont.cn/     
+  500px(摄影) https://500px.com/     
+  (插画) https://dribbble.com/     
+  视觉中国 http://www.shijue.me/
 
 6. Can I use： https://caniuse.com/
 
 7. 在线画流程图：https://www.processon.com/
 
-8. 时间选择器datePicker: http://www.daterangepicker.com/
+8. 时间选择器datePicker: http://www.daterangepicker.com/    
+
+9.开发者社区：https://stackoverflow.com/    
