@@ -27,4 +27,4 @@
 
 8. 时间选择器datePicker: http://www.daterangepicker.com/
 
-9.开发者社区：https://stackoverflow.com/    
+9. 开发者社区：https://stackoverflow.com/
