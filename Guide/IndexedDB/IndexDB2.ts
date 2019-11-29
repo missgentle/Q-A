@@ -1,7 +1,3 @@
-type indexDBdata = {
-  count: number, 
-  data: Array<WSRecord.Message>
-}
 export default class IndexDB {
 
   private static instance:IndexDB = new IndexDB();  
@@ -36,32 +32,34 @@ export default class IndexDB {
     return new Promise((resolve, reject) => {
       this.getDB(tableName).then((db) => {
         var transaction = db.transaction(tableName, type);
+        resolve(transaction.objectStore(tableName));
         transaction.onerror = function() {
           reject(transaction.error);
-        };
-        transaction.oncomplete = function() {
-          resolve(transaction.objectStore(tableName));
         };
       });
     });
   }
-
-    getAll(tableName:string): Promise<indexDBdata> {
+ 
+    getAll(tableName:string): Promise<Array<WSRecord.Message>> {
+      let resultRequest: IDBRequest;
       return new Promise((resolve, reject) => {
         this.withStore( 'readonly', tableName).then((store) => {
-          resolve({
-            count:store.count().result,
-            // data:store.getAll().result
-            data:store.get("xuqin2019-11-25 09:09:25*38eda550-0f20-11ea-ba94-4d1f87bc1ac1").result
-          });
+          resultRequest = store.getAll();
+          resultRequest.onsuccess = (e) => {
+            resolve(resultRequest.result);
+          };
         });
       });
     }
 
     get(tableName:string, key:string): Promise<WSRecord.Message> {
+      let resultRequest: IDBRequest;
       return new Promise((resolve, reject) => {
         this.withStore( 'readonly', tableName).then((store) => {
-          resolve(store.get(key).result);
+          resultRequest = store.get(key);
+          resultRequest.onsuccess = (e) => {
+            resolve(resultRequest.result);
+          };
         });
       });
     }
