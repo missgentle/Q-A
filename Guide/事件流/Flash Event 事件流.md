@@ -1,8 +1,8 @@
 > 前些天看掘金是这篇文章 https://juejin.im/post/5e739534e51d4526f23a4150 后，    
 > 我翻出了我珍藏多年的笔记本(真的是笔记本)，于是乎想整理下当初学习事件流时的笔记。    
 
-好像当初是翻到了这篇文档吧 https://wenku.baidu.com/view/540c911155270722192ef715.html    
-还有这篇 https://blog.csdn.net/eyeshang/article/details/7918518    
+> 好像当初是翻到了这篇文档吧 https://wenku.baidu.com/view/540c911155270722192ef715.html    
+> 还有这篇 https://blog.csdn.net/eyeshang/article/details/7918518    
 
 ## 1. 事件的生命周期——三阶段    
 
@@ -14,18 +14,18 @@
 (3)冒泡阶段：事件由目标元素向上返回根节点。如果事件为可冒泡事件(如click，doubleClick，keyDown，keyUp，mouseDown，mouseUp，change...)    
 且useCapture=flase，则此期间，所有注册了该事件的父元素对象依次派发。    
 
-*注：*我们可以通过event.eventPhase来查询当前阶段。    
+**注：**我们可以通过event.eventPhase来查询当前阶段。    
 
 ## 2.flash.events.Event.Event(type:String,bubbles:Boolean=false,cancelable:Boolean=false)    
 
-*参数：*    
+**参数：**    
 - type：事件类型，可作为Event.type访问。    
 - bubbles：确实Event对象是否参与冒泡阶段，默认不参与冒泡阶段，参与目标和捕获阶段。    
 - cancelable：确定是否可以取消Event对象。    
 
 ## 3.flash.events.EventDispatcher.addEventLisenr(type:String,listener:Function,useCapture:Boolean=false,priority:int=0,useWeakReference:Boolean=false):void    
 
-*参数：*    
+**参数：**    
 - type：事件类型。    
 - listener：处理事件的侦听器函数(事件处理函数)。此函数必须接受Event对象为唯一参数，并且不能返回任何结果。    
 - useCapture：确定事件派发于捕获阶段还是目标和冒泡阶段，默认在目标和冒泡阶段派发。    
