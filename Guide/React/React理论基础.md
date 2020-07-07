@@ -119,9 +119,69 @@ this.props.render(this.state) 并不是在组件中修改了props，而是将参
 注意在React.PureComponent中使用Render Props要小心    
 使用Render Prop会抵消使用React.PureComponent带来的优势如果在render()中创建方法。这是因为对于新的prop，浅prop比较总是返回false，并且在这种情况下，每次渲染都会为Render Prop生成一个新的值。  这时可以将render prop定义为一个实例方法 提出到render()之外
     
+React 16.8 新增hook让您不用编写类就可以使用state和其他React特性。    
 为什么会出现钩子hook？    
 1. 很难在组件之间重用有状态逻辑：React没有提供将可重用行为添加到组件的方法    
-2.
+可以通过render props 和HOC尝试解决这个问题，但这要求重构代码。你可能会发现组件的“包装地狱”，由提供者providers、使用者,consumers、高阶组件HOC、渲染道具render props和其他抽象层包围。所以React需要一个更好的原语来共享有状态逻辑。通过使用钩子，可以从组件中提取有状态逻辑，以便能够独立地测试和重用它。    
+2. 复杂的组件变得难以理解：    
+3. 类混淆了人和机器：除了使代码重用和代码组织更加困难之外，我们还发现类是学习React的一大障碍。    
+您必须了解this在JavaScript中是如何工作的，这与在大多数语言中是非常不同的。人们可以很好地理解道具、状态和自顶向下的数据流，但仍然很难理解类。类不能很好地缩小，它们使得热重新加载不稳定且不可靠。
+从概念上讲，React组件总是更接近函数。    
+
+什么是钩子    
+钩子是一种功能，它可以让你从功能组件“钩入”React状态和生命周期特性。    
+什么是钩子?钩子是一种特殊的函数，可以让您“钩入”React特性。例如，useState是一个钩子，它允许您向功能组件添加反应状态。    
+我什么时候用鱼钩?如果您编写了一个函数组件，并且意识到需要向其添加一些状态，那么以前您必须将其转换为一个类。现在您可以在现有的函数组件中使用一个钩子。    
+React提供了一些内置的钩子，比如useState。您还可以创建自己的钩子来重用不同组件之间的有状态行为。    
+
+State Hook    
+React提供的一个名为useState的钩子。有时我们也称它为"状态挂钩"它允许我们添加本地状态来响应函数组件，你可以在单个组件中多次使用状态挂钩    
+
+Effect Hook    
+效果钩子让你在功能组件中执行副作用(或 “效果”)，在React组件中获取数据、设置订阅和手动更改DOM都是副作用的例子。调用useEffect时，您是在告诉React在刷新DOM的更改后运行“effect”函数。默认情况下，React会在每次渲染之后运行“effect”——包括第一次渲染。    
+钩子允许您根据相关的部分(如添加和删除订阅)来组织组件中的副作用，而不是强制基于生命周期方法进行拆分，它允许您在组件中执行副作用，并且类似于类中的生命周期方法    
+如果您熟悉React类生命周期方法，您可以将useEffect钩子看作是componentDidMount、componentDidUpdate和componentWillUnmount的组合。    
+React组件有两种常见的副作用:不需要清理的副作用和需要清理的副作用。    
+有时，我们希望在React更新了DOM之后运行一些额外的代码。网络请求、手工DOM突变和日志记录是不需要清理的常见效果示例。    
+在React类组件中，render方法本身不应该造成副作用。因为这里还为时过早——我们通常希望在React更新了DOM之后再执行效果。这就是为什么在React类中，我们将副作用放到componentDidMount和componentDidUpdate中。请注意，我们必须在类中的这两个生命周期方法之间复制代码。    
+这是因为在许多情况下，我们希望执行相同的副作用，而不管组件是刚刚挂载还是已经更新。从概念上讲，我们希望它在每次呈现之后发生——但是React类组件没有这样的方法。我们可以提取一个单独的方法，但是我们仍然必须在两个地方调用它。    
+Effect Hook是做什么的?通过使用这个钩子，你告诉React你的组件需要在渲染之后做一些事情。React将记住您传递的函数(我们将把它称为“效果”)，并在执行DOM更新之后调用它。    
+为什么在组件内部调用useEffect ?将useEffect放在组件中，我们可以直接从该效果访问状态变量(或任何prop)。我们不需要一个特殊的API来读取它——它已经在函数作用域中了。钩子包含了JavaScript闭包，并避免引入JavaScript已经提供解决方案的React-specific APIs。    
+是否每次渲染后都会运行useEffect ?是的!默认情况下，它在第一次渲染和每次更新之后运行。    
+与componentDidMount或componentDidUpdate不同，使用useEffect计划的效果不会阻止浏览器更新屏幕。这让你的应用程序感觉响应更快。大多数效果不需要同步发生。在不常见的情况下(比如测量布局)，有一个单独的useLayoutEffect钩子，其API与useEffect相同。    
+
+钩子是JavaScript函数，但是它们附加了两个规则：    
+只在顶层调用钩子。不要在循环、条件或嵌套函数内部调用钩子。    
+只从React函数组件调用钩子。不要从常规JavaScript函数中调用钩子。    
+
+建立自己的钩子    
+有时，我们希望在组件之间重用一些有状态逻辑。传统上，这个问题有两种流行的解决方案:高阶组件和渲染道具。自定义钩子允许您这样做。钩子是重用有状态逻辑的一种方式，而不是状态本身。实际上，对钩子的每个调用都有一个完全隔离的状态——所以您甚至可以在一个组件中两次使用同一个自定义钩子。    
+如果一个函数的名字以“use”开头，并且它调用了其他钩子，我们称它为自定义钩子。useSomething命名约定是我们的linter插件能够使用钩子发现代码中的bug的方式。    
+
+还有一些不太常用的内置钩子，您可能会发现它们很有用。例如，useContext允许您订阅React上下文而不引入嵌套:    
+
+useReducer可以通过一个reducer管理复杂组件的本地状态:    
+
+钩子不能在类内部工作。但是您可以使用它们来代替编写类。    
+
+调用useState是做什么的?它声明一个“状态变量”。 通常，当函数退出时，变量“消失”，但状态变量被React保留。    
+我们传递给useState的参数是什么?useState()钩子的唯一参数是初始状态。与类不同，状态不必是一个对象。如果我们想在状态中存储两个不同的值，我们将调用两次useState()。    
+useState返回什么?它返回两个值:当前状态和一个更新状态的函数。    
+
+你可能想知道:为什么useState不命名为createState ?    
+“Create”不是很准确，因为状态只在第一次渲染时创建。在接下来的渲染中，useState会给我们当前状态。    
+
+读状态和更新状态在类组件和函数组件中的区别    
+
+方括号是什么意思?    
+当我们声明一个状态变量时，你可能已经注意到方括号: const [fruit, setFruit] = useState('banana');    
+这种JavaScript语法称为“数组解构”。这意味着我们创建了两个新变量fruit和setFruit，其中fruit被设置为useState返回的第一个值，setFruit是第二个。    
+
+function radioChangeHandler(event: React.ChangeEvent<HTMLInputElement>){    
+    let value = (event.target as HTMLInputElement).value;    
+    switch ((event.target as HTMLInputElement).name) {    
+      case "IFRadio":    
+
 
 
 
