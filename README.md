@@ -19,4 +19,5 @@
 > 各种酷炫插件推荐
 
 
-Advanced Installer 
+Advanced Installer     
+https://www.npmjs.com/package/xml-js
