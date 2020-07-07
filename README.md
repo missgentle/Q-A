@@ -19,3 +19,4 @@
 > 各种酷炫插件推荐
 
 
+Advanced Installer 
