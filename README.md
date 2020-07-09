@@ -20,4 +20,5 @@
 
 
 Advanced Installer     
-https://www.npmjs.com/package/xml-js
+https://github.com/reduxjs/redux-thunk    
+https://github.com/strml/react-draggable
