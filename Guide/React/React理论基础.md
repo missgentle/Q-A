@@ -149,6 +149,10 @@ Effect Hook是做什么的?通过使用这个钩子，你告诉React你的组件
 为什么在组件内部调用useEffect ?将useEffect放在组件中，我们可以直接从该效果访问状态变量(或任何prop)。我们不需要一个特殊的API来读取它——它已经在函数作用域中了。钩子包含了JavaScript闭包，并避免引入JavaScript已经提供解决方案的React-specific APIs。    
 是否每次渲染后都会运行useEffect ?是的!默认情况下，它在第一次渲染和每次更新之后运行。    
 与componentDidMount或componentDidUpdate不同，使用useEffect计划的效果不会阻止浏览器更新屏幕。这让你的应用程序感觉响应更快。大多数效果不需要同步发生。在不常见的情况下(比如测量布局)，有一个单独的useLayoutEffect钩子，其API与useEffect相同。    
+清理函数在组件从UI中移除之前运行，以防止内存泄漏。此外，如果一个组件呈现多次(通常如此)，则在执行下一个效果之前清除前一个效果。在我们的示例中，这意味着在每次更新时创建一个新的订阅。    
+与componentDidMount和componentDidUpdate不同，传递给useEffect的函数在延迟事件期间的布局和绘制之后触发。这使得它适合于许多常见的副作用，比如设置订阅和事件处理程序，因为大多数类型的工作不应该阻止浏览器更新屏幕。    
+然而，并不是所有的影响都可以推迟。例如，用户可见的DOM突变必须在下一次绘制之前同步触发，这样用户就不会感觉到视觉上的不一致。(这种区别在概念上类似于被动事件侦听器和主动事件侦听器。)对于这些类型的效果，React提供了一个名为useLayoutEffect的附加钩子。它与useEffect具有相同的签名，只是在触发时有所不同。    
+依赖项数组不作为参数传递给效果函数。但是，从概念上讲，这就是它们所表示的:在effect函数中引用的每个值也应该出现在依赖项数组中。在将来，一个足够高级的编译器可以自动创建这个数组。    
 
 钩子是JavaScript函数，但是它们附加了两个规则：    
 只在顶层调用钩子。不要在循环、条件或嵌套函数内部调用钩子。    
@@ -183,11 +187,58 @@ hook使用规则
 
 规则2：只从React函数调用钩子    
 不要从常规JavaScript函数中调用钩子。相反,您可以:    
-✅组件调用钩子从反应函数。    
-✅从自定义调用钩子钩(我们将了解他们在下一个页面上)。    
+✅从react函数组件调用。    
+✅从自定义hook调用。    
 通过遵循这一规则，可以确保组件中的所有有状态逻辑都可以从其源代码中清晰地看到。    
 
+如果更新函数返回与当前状态完全相同的值，则将完全跳过后续的重新运行程序。React使用 Object.is 进行比较。    
 
+自定义钩子是一个名称以“use”开头的JavaScript函数，它可能会调用其他钩子。确保只无条件地在自定义钩子的顶层调用其他钩子。    
+自定义钩子是一种重用有状态逻辑的机制(比如设置订阅并记住当前值)，但是每次使用自定义钩子时，其中的所有状态和效果都是完全隔离的。    
 
+可能您有一个复杂的组件，其中包含许多以特殊方式管理的本地状态。useState不会让集中更新逻辑变得更容易，所以你可能更喜欢把它写成一个Redux reducer:    
+```
+function todosReducer(state, action) {
+  switch (action.type) {
+    case 'add':
+      return [...state, {
+        text: action.text,
+        completed: false
+      }];
+    // ... other actions ...
+    default:
+      return state;
+  }
+}
+```    
+
+那么，如果我们可以编写一个useReducer钩子，让我们用一个reducer管理组件的本地状态，它的简化版本可能是这样的:    
+
+```
+function useReducer(reducer, initialState) {
+  const [state, setState] = useState(initialState);
+
+  function dispatch(action) {
+    const nextState = reducer(state, action);
+    setState(nextState);
+  }
+
+  return [state, dispatch];
+}
+```    
+  
+现在我们可以在组件中使用它，并让reducer驱动其状态管理:    
+
+```
+function Todos() {
+  const [todos, dispatch] = useReducer(todosReducer, []);
+
+  function handleAddClick(text) {
+    dispatch({ type: 'add', text });
+  }
+
+  // ...
+}
+```    
 
 
