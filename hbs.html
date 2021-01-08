@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>周报模板</title>
+</head>
+<body>
+    <div style="width: 600px;background-color: #FFFFFF;box-shadow:0 0 30px #fcfbee inset,3px 3px 6px rgba(0, 0, 0, 0.8);">
+        <div style="width: 600px;height: 34px;background-color: rgba(246,56,14,0.3);">
+            <div style="height:26px;font-family: 微软雅黑;font-weight:bold;font-size:14px;padding-top:7px;padding-left:18px;">周报模板
+            </div>
+        </div>
+
+
+
+
+
+        <div style="padding:0px 15px 25px 15px;">
+            <h4 style="font-family: 微软雅黑;font-weight:bold;">🔹🔷上周计划：🔷🔹</h4>
+            <div style="padding: 0px 25px;margin-top: 15px;">
+                <div style="margin: 10px 0px">
+                    <label>🔹Jtarc：</label>
+                    <button name="btnAddItem" style="cursor:pointer;border:1px solid #f0360f;color: #FFFFFF;font-size: 12px;font-family: 微软雅黑;background-color: #f85b38;float: right">＋ 添加 </button>
+                        <div style="padding: 0px 25px;">
+                            <label>※<input name="jtracPlan" style="width: 260px;height: 24px;margin: 5px 2px 0px 2px;border: 1px solid #bfbfbf;" type="text" placeholder="jtracPlan"/></label>
+                            
+                            <input type="radio" name="lastJtracPlanRadio0">IDC
+                            
+                            
+                            <input type="radio" name="lastJtracPlanRadio0">45
+                            
+                        </div>
+                    
+                </div>
+                <div style="margin: 10px 0px">
+                    <label>🔹MPH5：</label>
+                    <button name="btnAddItem" style="cursor:pointer;border:1px solid #f0360f;color: #FFFFFF;font-size: 12px;font-family: 微软雅黑;background-color: #f85b38;float: right">＋ 添加 </button>
+                        <div style="padding: 0px 25px;">
+                            <label>※<input name="MPH5Plan" style="width: 260px;height: 24px;margin: 5px 2px 0px 2px;border: 1px solid #bfbfbf;" type="text" placeholder="MPH5Plan"/></label>
+                            
+                            <input type="radio" name="lastMPH5PlanRadio0">IDC
+                            
+                            
+                            <input type="radio" name="lastMPH5PlanRadio0">45
+                            
+                        </div>
+                    
+                </div>
+                <div style="margin: 10px 0px">
+                    <label>🔹技术学习：</label>
+                    <div style="padding: 0px 25px;">
+                        <label>※<input name="lastNewTecPlan" style="width: 260px;height: 24px;margin: 5px 2px 0px 2px;border: 1px solid #bfbfbf;" type="text" placeholder="lastNewTecPlan"/></label>
+                    </div>
+                </div>
+            </div>
+
+
+            <h4 style="font-family: 微软雅黑;font-weight:bold;">🔸🔶下周计划：🔶🔸</h4>
+            <div style="padding: 0px 25px;margin-top: 15px;">
+                <div style="margin: 10px 0px">
+                    <label>🔸Jtarc：</label>
+                    <button name="btnAddItem" style="cursor:pointer;border:1px solid #f0360f;color: #FFFFFF;font-size: 12px;font-family: 微软雅黑;background-color: #f85b38;float: right">＋ 添加 </button>
+                        <div style="padding: 0px 25px;">
+                            <label>※<input name="jtracPlan" style="width: 260px;height: 24px;margin: 5px 2px 0px 2px;border: 1px solid #bfbfbf;" type="text" placeholder="jtracPlan"/></label>
+                        </div>
+                    
+                </div>
+                <div style="margin: 10px 0px">
+                    <label>🔸MPH5：</label>
+                    <button name="btnAddItem" style="cursor:pointer;border:1px solid #f0360f;color: #FFFFFF;font-size: 12px;font-family: 微软雅黑;background-color: #f85b38;float: right">＋ 添加 </button>
+                        <div style="padding: 0px 25px;">
+                            <label>※<input name="MPH5Plan" style="width: 260px;height: 24px;margin: 5px 2px 0px 2px;border: 1px solid #bfbfbf;" type="text" placeholder="MPH5Plan"/></label>
+                        </div>
+                    
+                </div>
+                <div style="margin: 10px 0px">
+                    <label>🔸技术学习：</label>
+                    <div style="padding: 0px 25px;">
+                        <label>※<input name="nextNewTecPlan" style="width: 260px;height: 24px;margin: 5px 2px 0px 2px;border: 1px solid #bfbfbf;" type="text" placeholder="nextNewTecPlan"/></label>
+                    </div>
+                </div>
+            </div>
+
+            <div style="font-size: 14px;color: #ff6633;">
+                <div style="font-weight: bold;margin: 4px 0px;">📌格式说明：</div>
+                *jtracPlan - jtrac号+开发内容摘要+计划进度+实际进度 <br/>
+                *MPH5Plan - 编号+内容摘要+具体进行内容|未进行理由+当前进度 <br/>
+            </div>
+        </div>
+
+
+
+
+
+    </div>
+</body>
+<script type="text/javascript">
+    const doc = `
+        <div style="padding:0px 15px 25px 15px;">
+            <h4 style="font-family: 微软雅黑;font-weight:bold;">🔹🔷上周计划：🔷🔹</h4>
+            <div style="padding: 0px 25px;margin-top: 15px;">
+                <div style="margin: 10px 0px">
+                    <label>🔹Jtarc：</label>
+                    {{#each lastWeekJtracList}}
+                        <div style="padding: 0px 25px;">
+                            <label>※{{jtracPlan}}</label>
+                            {{#if IDCFlag}}
+                            <input type="radio" name="lastJtracPlanRadio{{@index}}">IDC
+                            {{/if}}
+                            {{#if csFlag}}
+                            <input type="radio" name="lastJtracPlanRadio{{@index}}">45
+                            {{/if}}
+                        </div>
+                    {{/each}}
+                </div>
+                <div style="margin: 10px 0px">
+                    <label>🔹MPH5：</label>
+                    {{#each lastWeekMPH5List}}
+                        <div style="padding: 0px 25px;">
+                            <label>※{{MPH5Plan}}</label>
+                            {{#if IDCFlag}}
+                            <input type="radio" name="lastMPH5PlanRadio{{@index}}">IDC
+                            {{/if}}
+                            {{#if csFlag}}
+                            <input type="radio" name="lastMPH5PlanRadio{{@index}}">45
+                            {{/if}}
+                        </div>
+                    {{/each}}
+                </div>
+                <div style="margin: 10px 0px">
+                    <label>🔹技术学习：</label>
+                    <div style="padding: 0px 25px;">
+                        <label>※{{lastNewTecPlan}}</label>
+                    </div>
+                </div>
+            </div>
+
+
+            <h4 style="font-family: 微软雅黑;font-weight:bold;">🔸🔶下周计划：🔶🔸</h4>
+            <div style="padding: 0px 25px;margin-top: 15px;">
+                <div style="margin: 10px 0px">
+                    <label>🔸Jtarc：</label>
+                    {{#each nextWeekJtracList}}
+                        <div style="padding: 0px 25px;">
+                            <label>※{{jtracPlan}}</label>
+                        </div>
+                    {{/each}}
+                </div>
+                <div style="margin: 10px 0px">
+                    <label>🔸MPH5：</label>
+                    {{#each nextWeekMPH5List}}
+                        <div style="padding: 0px 25px;">
+                            <label>※{{MPH5Plan}}</label>
+                        </div>
+                    {{/each}}
+                </div>
+                <div style="margin: 10px 0px">
+                    <label>🔸技术学习：</label>
+                    <div style="padding: 0px 25px;">
+                        <label>※{{nextNewTecPlan}}</label>
+                    </div>
+                </div>
+            </div>
+
+            <div style="font-size: 14px;color: #ff6633;">
+                <div style="font-weight: bold;margin: 4px 0px;">📌格式说明：</div>
+                *jtracPlan - jtrac号+开发内容摘要+计划进度+实际进度 <br/>
+                *MPH5Plan - 编号+内容摘要+具体进行内容|未进行理由+当前进度 <br/>
+            </div>
+        </div>
+    ` 
+
+    //拆分逻辑
+    let moduleTag = /[^{}]+|{{(#|\/|@)?([^{}]+)}}/g;
+    let fragment;
+    let objFragment = {};
+    let objAcFragment = [];
+    let mapLoop = new WeakMap();
+    while(( fragment = moduleTag.exec(doc) )){
+        objFragment = {type:'',keyword:'',para:'',content:''};
+        if(fragment[1] === undefined && fragment[2] === undefined){
+            //html文本片段
+            objFragment.type = 'text';
+        }else if(fragment[1] === undefined && fragment[2] !== undefined){
+            //{{参数片段}}
+            objFragment.type = 'para';
+            objFragment.para = fragment[2];
+        }else if(fragment[1] !== undefined && fragment[2] !== undefined){
+            //{{#|/|@逻辑结构片段}}
+            objFragment.type = 'keyword';
+            objFragment.keyword = fragment[1] + fragment[2].split(' ')[0];
+            objFragment.para = fragment[2].split(' ')[1];
+        }
+        objFragment.content = fragment[0];
+        objAcFragment.push(objFragment);
+        // console.log(objFragment);
+        // for(let i=0; i < 3; i++){
+        //     console.log('// [' + i + '] ' + fragment[i]);  
+        // }
+        // console.log('----------------------------------------');
+    }
+
+    for(let m = 0; m < objAcFragment.length; m++){
+        if(objAcFragment[m].type === 'keyword' && objAcFragment[m].keyword === '#if'){
+            // getLoopString(objAcFragment[m].para);
+            let loopString = '';
+            let start = false;
+            let nestloop = 0;
+            for(let k = 0; k < objAcFragment.length; k++){
+                if(objAcFragment[k].keyword === '#if' && objAcFragment[k].para === objAcFragment[m].para){
+                    start = true;
+                    continue;
+                }
+                if(start){
+                    if(objAcFragment[k].type === 'text' || objAcFragment[k].type === 'para'){
+                        loopString += objAcFragment[k].content;
+                    }else if(objAcFragment[k].type === 'keyword'){
+                        if(objAcFragment[k].keyword === '#if'){
+                            nestloop++;
+                        }else if(objAcFragment[k].keyword === '/if'){
+                            if(nestloop <= 0){
+                                start = false;
+                                // return;
+                            }else{
+                                nestloop--;
+                                loopString += objAcFragment[k].content;
+                            }
+                        }else{
+                            loopString += objAcFragment[k].content;
+                        }
+                    }
+                }
+            }
+            // console.log(loopString);
+        }
+    }
+
+
+    
+    function getLogicBodyString(keyword, logicBodyId){
+        let logicBodyString = '';
+        let start = false;
+        let nestLogicBodyNum = 0;
+        for(let k = 0; k < objAcFragment.length; k++){
+            if(objAcFragment[k].keyword === '#' + keyword && objAcFragment[k].para === logicBodyId){
+                start = true;
+                continue;
+            }
+            if(start){
+                if(objAcFragment[k].type === 'text' || objAcFragment[k].type === 'para'){
+                    logicBodyString += objAcFragment[k].content;
+                }else if(objAcFragment[k].type === 'keyword'){
+                    if(objAcFragment[k].keyword === '#' + keyword){
+                        nestLogicBodyNum++;
+                    }else if(objAcFragment[k].keyword === '/' + keyword){
+                        if(nestLogicBodyNum <= 0){
+                            start = false;
+                            return;
+                        }else{
+                            nestLogicBodyNum--;
+                            logicBodyString += objAcFragment[k].content;
+                        }
+                    }else{
+                        logicBodyString += objAcFragment[k].content;
+                    }
+                }
+            }
+        }
+        return logicBodyString;
+    }
+
+    //输入模式解析
+    let result = '';
+    let index = 0;
+    for(let i = 0; i < objAcFragment.length; i++){
+        if(objAcFragment[i].type === 'text'){
+            result += objAcFragment[i].content;
+        }else if(objAcFragment[i].type === 'para'){
+            result += '<input name="' + objAcFragment[i].para + '" style="width: 260px;height: 24px;margin: 5px 2px 0px 2px;border: 1px solid #bfbfbf;" type="text" placeholder="' + objAcFragment[i].para + '"/>';
+        }
+        else if(objAcFragment[i].type === 'keyword'){
+            if(objAcFragment[i].keyword === '#each'){
+                index = 0;
+                result += '<button name="btnAddItem" style="cursor:pointer;border:1px solid #f0360f;color: #FFFFFF;font-size: 12px;font-family: 微软雅黑;background-color: #f85b38;float: right">＋ 添加 </button>';
+            }else if(objAcFragment[i].keyword === '#if'){
+                
+            }else if(objAcFragment[i].keyword === '@index'){
+                result += index;
+            }
+        }
+    }
+    // console.log(result);
+
+    //显示模式解析
+    let obj = {
+        lastWeekJtracList:[
+            {jtracPlan:{ jtracNo:'Mall-742', plan:'PC版快递鸟100%',reality:'完成'},IDCFlag:false,csFlag:true},
+            {jtracPlan:'V2A-10010 DW&DL增加下载记录100% 未完成',IDCFlag:true,csFlag:false},
+            {jtracPlan:'V2A-10002 GERP菜单协助50% 完成',IDCFlag:false,csFlag:false}
+        ],
+        lastWeekMPH5List:[{MPH5Plan:'6-9 下拉框展开宽度调整 未进行',IDCFlag:false,csFlag:false}],
+        lastNewTecPlan:'React技术分享PPT整理 未完成 当前进度50%',
+        nextWeekJtracList:[{jtracPlan:'V2A-10002 GERP菜单协助100%'}],
+        nextWeekMPH5List:[{MPH5Plan:''}],
+        nextNewTecPlan:'React技术分享PPT整理',
+    };
+
+    let showresult = '';
+    var name;
+    for(name in obj){
+        console.log(name);
+        console.log(typeof obj[name]);
+        if(typeof obj[name] === 'object' && obj.hasOwnProperty(name)){
+
+        }else if(typeof obj[name] === 'string' && obj.hasOwnProperty(name)){
+            
+        }
+    }
+    // console.log(showresult);
+
+
+
+
+
+</script>
+
+</html>
+<!-- 模板解析开发的话，最好做成模块扩展式的 
+普通标签是不用处理的，特殊标签{{ }} 才解析，根据handlebars语法做成模块似的
+比如 Loop模块  Condition模块 Text模块 <- registerModule()
+模块里根据事先定义的接口实现统一的方法(type: ??? ; input: ？？？ ;  output ？？？； variable ？？？; etc.)
+解析的时候 根据类型(显示/输入) 读取已安装的模块(getRegisteredModules)，生成解析器 -->
