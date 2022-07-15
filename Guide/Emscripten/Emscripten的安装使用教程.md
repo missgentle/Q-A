@@ -1,4 +1,7 @@
->
+> 注意    
+> 注意    
+> 注意    
+> ！！！
 > 此文写于2019年末，许多内容在如今新版实践中已不适用，故而另写了一篇新的实践文档    
 > 请去这里：https://github.com/missgentle/WebAssembly/blob/master/doc/Emscripten%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A82022.md    
 > 
